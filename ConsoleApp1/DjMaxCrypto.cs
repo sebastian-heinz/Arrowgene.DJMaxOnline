@@ -25,13 +25,16 @@ public class DjMaxCrypto
 
     public void Decrypt()
     {
+        // client side
+        
+        // pre connect
         byte[] seed = new byte[0xFA * 4];
         IBuffer bSeed1 = new StreamBuffer(seed);
         IBuffer bSeed2= new StreamBuffer(seed);
         sub_49F554(bSeed1);
         sub_49F554(bSeed2);
         
-        
+        // on connect ack
         byte[] onConAckBuf = new byte[]
         {
             0x09, 0x00, 0xCC, 0x05, 0x00, 0x4D, 0x01,
@@ -56,7 +59,6 @@ public class DjMaxCrypto
         //E8 07 06 00 10 00 00 00 25 00 2C 00 C0 09 35 38 0B 3E B4 A2 B0 11 00 00
         //CC CC CC CC CC CC CC CC 00 00 00 00 00 00 00
         byte[] r1 = sOnConAckBuf.GetBytes(7, 32);
-        Console.WriteLine(Util.HexDump(r1));
         IBuffer bR1 = new StreamBuffer(r1);
         int s1 = sub_4AF070(r1, 32); // 0x807
         byte b1 = (byte)s1; // 0x07
@@ -69,8 +71,15 @@ public class DjMaxCrypto
         uint u1 = bR1.GetUInt32(28); // 0xB0 0x11 0x00 0x00
 
 
-        sub_49F4A2();
-        sub_49F884(new byte[] { });
+        sub_49F563(bSeed1, u1);
+        Console.WriteLine(Util.HexDump(bSeed1.GetAllBytes()));
+    }
+    
+    private void sub_49F563(IBuffer b, uint u1)
+    {
+        b.Position = 0;
+        b.WriteUInt32(u1);
+        sub_49F50E(b);
     }
 
     private int sub_4AF070(byte[] buf, int len)
@@ -122,8 +131,6 @@ public class DjMaxCrypto
             v4 >>= 1;
             pos += 0x1C;
         }
-        
-        Console.WriteLine(Util.HexDump(b1.GetAllBytes()));
     }
 
     private int sub_49F4D9(IBuffer b, int pos)
