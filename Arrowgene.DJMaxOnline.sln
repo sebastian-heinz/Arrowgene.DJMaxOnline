@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrowgene.DJMaxOnline.CLI", "Arrowgene.DJMaxOnline.CLI\Arrowgene.DJMaxOnline.CLI.csproj", "{1F179BC9-8C8A-4337-AD2E-02CEA30326CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{6891D0DE-B78A-4475-BD77-43CF7EEF2999}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1F179BC9-8C8A-4337-AD2E-02CEA30326CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F179BC9-8C8A-4337-AD2E-02CEA30326CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F179BC9-8C8A-4337-AD2E-02CEA30326CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F179BC9-8C8A-4337-AD2E-02CEA30326CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6891D0DE-B78A-4475-BD77-43CF7EEF2999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6891D0DE-B78A-4475-BD77-43CF7EEF2999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6891D0DE-B78A-4475-BD77-43CF7EEF2999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6891D0DE-B78A-4475-BD77-43CF7EEF2999}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
