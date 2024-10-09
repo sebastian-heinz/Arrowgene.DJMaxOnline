@@ -26,14 +26,14 @@ public class DjMaxCrypto
     public void Decrypt()
     {
         // client side
-        
+
         // pre connect
-        byte[] seed = new byte[0xFA * 4];
-        IBuffer bSeed1 = new StreamBuffer(seed);
-        IBuffer bSeed2= new StreamBuffer(seed);
-        sub_49F554(bSeed1);
-        sub_49F554(bSeed2);
-        
+        byte[] seed = new byte[(0xFA * 4) + 12];
+        IBuffer b1 = new StreamBuffer(seed);
+        IBuffer b2 = new StreamBuffer(seed);
+        sub_49F554(b1);
+        sub_49F554(b2);
+
         // on connect ack
         byte[] onConAckBuf = new byte[]
         {
@@ -61,7 +61,7 @@ public class DjMaxCrypto
         byte[] r1 = sOnConAckBuf.GetBytes(7, 32);
         IBuffer bR1 = new StreamBuffer(r1);
         int s1 = sub_4AF070(r1, 32); // 0x807
-        byte b1 = (byte)s1; // 0x07
+        byte ba2 = (byte)s1; // 0x07
         //65 20 1A 98
         //EE A8 4D 01
         //E8 07 06 00 10 00 00 00 25 00 2C 00 C0 09 35 38 0B 3E B4 A2 B0 11 00 00
@@ -70,11 +70,11 @@ public class DjMaxCrypto
         ushort s2 = sOnConAckBuf.GetUInt16(5); // 0x4D 0x01
         uint u1 = bR1.GetUInt32(28); // 0xB0 0x11 0x00 0x00
 
-
-        sub_49F563(bSeed1, u1);
-        Console.WriteLine(Util.HexDump(bSeed1.GetAllBytes()));
+        sub_49F563(b1, u1);
+        sub_49F563(b2, u1);
+        Console.WriteLine(Util.HexDump(b1.GetAllBytes()));
     }
-    
+
     private void sub_49F563(IBuffer b, uint u1)
     {
         b.Position = 0;
@@ -99,74 +99,63 @@ public class DjMaxCrypto
         b.WriteUInt32(0);
         sub_49F50E(b);
     }
-    
+
     private void sub_49F50E(IBuffer b)
     {
-        IBuffer b1 = new StreamBuffer(new byte[0xFA * 4]);
         b.Position = 4;
         b.WriteUInt32(0);
         b.WriteUInt32(0x67);
         b.Position = 0;
-        for (int i = 0xFA; i > 0; i--)
+        for (int i = 0xFA; i > 0 ; i--)
         {
-            int r = sub_49F4D9(b, 0);
-            b1.Position = (i * 4) - 4;
-            b1.WriteInt32(r);
+            uint r = sub_49F4D9(b, 0);
+            b.Position = ((i * 4) - 4) + 12;
+            b.WriteUInt32(r);
         }
-
         uint v4 = 0xFFFFFFFF;
         uint v5 = 0x80000000;
-
-
         int pos = 0x18;
         while (v5 != 0)
         {
             b.Position = pos;
-            int result = b.ReadInt32();
-            result = result & (int)v4;
-            result = result | (int)v5;
+            uint result = b.ReadUInt32();
+            result = result & v4;
+            result = result | v5;
             b.Position = pos;
-            b.WriteInt32(result);
+            b.WriteUInt32(result);
             v5 >>= 1;
             v4 >>= 1;
             pos += 0x1C;
         }
     }
 
-    private int sub_49F4D9(IBuffer b, int pos)
+    private uint sub_49F4D9(IBuffer b, int pos)
     {
         b.Position = pos;
-        int val = b.ReadInt32();
-        for (int i = 0; i < 32 / 4; i++)
+        uint val = b.ReadUInt32();
+        for (int i = 0; i < 32; i++)
         {
-            int u1 = val >> 2;
-            int u2 = u1 ^ val;
-            int u3 = u2 >> 3;
-
-            int x1 = val;
-            int x2 = x1 >> 1;
-
-            int s3 = u3 ^ x2;
-            int s4 = s3 ^ val;
-            int s5 = s4 >> 1;
-            int s6 = s5 ^ val;
-            int s7 = s6 >> 1;
-            int s8 = s7 >> 1;
-            int s9 = s8 ^ x2;
-            int s10 = s9 ^ val;
-
-            int w = val << 0x1F;
-            int v = s10 & 0x1;
-
-            int y = w | x2;
-
-            int z = y ^ v;
-
+            uint u1 = val >> 2;
+            uint u2 = u1 ^ val;
+            uint u3 = u2 >> 3;
+            uint x1 = val;
+            uint x2 = x1 >> 1;
+            uint s3 = u3 ^ x2;
+            uint s4 = s3 ^ val;
+            uint s5 = s4 >> 1;
+            uint s6 = s5 ^ val;
+            uint s7 = s6 >> 1;
+            uint s9 = s7 ^ x2;
+            uint s10 = s9 ^ val;
+            uint w = val << 0x1F;
+            uint v = s10 & 0x1;
+            uint y = w | x2;
+            uint z = y ^ v;
             val = z;
         }
 
         b.Position = pos;
-        b.WriteInt32(val);
+        b.WriteUInt32(val);
         return val;
     }
 
