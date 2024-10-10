@@ -68,15 +68,15 @@ public class DjMaxCrypto
 
         sub_49F563(bSnd, u1);
         sub_49F563(bRcv, u1);
-        
+
         // TODO implement this
         sub_49F92C();
         sub_49F92C();
-        
+
         // Missing send encryption
         sub_49F4A2(bSnd);
         // TODO encrypt implementation
-        
+
         // recv XX
         sub_49F4A2(bRcv);
         byte[] onXX = new byte[]
@@ -91,185 +91,244 @@ public class DjMaxCrypto
         };
         IBuffer onXXB = new StreamBuffer(onXX);
         sub_49F884(bRcv, onXXB);
-        
+
         Console.WriteLine(Util.HexDump(bSnd.GetAllBytes()));
     }
 
     /// <summary>
     /// Decryption
     /// </summary>
-    private void sub_49F884(IBuffer key, IBuffer data)
+    //  private void sub_49F884(IBuffer key, IBuffer data)
+    //  {
+    //      for (int i = 0; i < data.Length; i++)
+    //      {
+    //          byte k = 0;
+    //          byte b = d.ReadByte();
+    //          byte r = (byte)(b ^ k);
+    //      }
+    //  }
+    private void process_crypt_table(uint[] crypt_table)
     {
-        for (int i = 0; i < data.Length; i++)
+        for (uint i = 0; i < 227; i++)
         {
-            byte k = 0;
-            byte b = d.ReadByte();
-            byte r = (byte)(b ^ k);
+            crypt_table[i] =
+                crypt_table[i + 397] ^
+                ((crypt_table[i + 1] & 1) != 0 ? 0x9908B0DF : 0) ^
+                ((crypt_table[i] ^ (crypt_table[i + 1] ^ crypt_table[i]) & 0x7FFFFFFE) >> 1);
+        }
+
+        for (uint i = 0; i < 396; i++)
+        {
+            crypt_table[i + 227] =
+                crypt_table[i] ^
+                ((crypt_table[i + 228] & 1) != 0 ? 0x9908B0DF : 0) ^
+                ((crypt_table[i + 227] ^ (crypt_table[i + 228] ^ crypt_table[i + 227]) & 0x7FFFFFFE) >> 1);
+        }
+
+        crypt_table[623] =
+            crypt_table[396] ^
+            ((crypt_table[0] & 1) != 0 ? 0x9908B0DF : 0) ^
+            ((crypt_table[623] ^ (crypt_table[0] ^ crypt_table[623]) & 0x7FFFFFFE) >> 1);
+    }
+
+    private uint[] seedTable(uint crypt_seed)
+    {
+        uint[] crypt_table = new uint[624];
+        crypt_table[0] = crypt_seed;
+        for (uint i = 1; i < 624; i++)
+        {
+            uint last = crypt_table[i - 1];
+            crypt_table[i] = i + 0x6C078965 * (last ^ (last >> 30));
+        }
+
+        return crypt_table;
+    }
+
+    private byte[] decrypt(byte[] data)
+    {
+        byte[] output = new byte[data.Length];
+        // Use the uppercase filename to seed the crypto algorithm
+        crypt_table = seedTable();
+        uint last_out = 0x43415046u;
+        for (uint i = 0; i < data.Length / 4; i++)
+        {
+            if (i % 624 == 0)
+                process_crypt_table(crypt_table);
+
+            uint entry = crypt_table[i % 624];
+            uint key =
+                (((((((entry >> 11) ^ entry) & 0xFF3A58AD) << 7) ^ (entry >> 11) ^ entry) & 0xFFFFDF8C) << 15) ^
+                ((((entry >> 11) ^ entry) & 0xFF3A58AD) << 7) ^
+                (entry >> 11) ^
+                entry;
+
+            last_out ^= data[i] ^ (key ^ (key >> 18));
+                out.write((char*)(&last_out), 4);
         }
     }
 
-    private uint sub_49F92C()
-    {
-        sub_49E2A4();
-        v6 = sub_49F629();
-        return 0;
-    }
-    private uint sub_49F629()
-    {
-        char *v1; // esi
-        int v2; // edi
-
-        v1 = this + 32;
-        v2 = sub_49E34B(this + 32);
-        sub_49E34B(v1);
-        return v2;
-    }
-    
-    private uint sub_49E34B()
-    {
-        int v1; // eax
-        int i; // esi
-        unsigned int *v3; // edx
-        unsigned int *v4; // edx
-        unsigned int v5; // edx
-        int v6; // eax
-        unsigned int v7; // edx
-        unsigned int v8; // edx
-
-        v1 = this[624];
-        if ( v1 >= 624 )
-        {
-            if ( v1 == 625 )
-                sub_49E25E(5489);
-            for ( i = 0; i < 227; ++i )
-            {
-                v3 = &this[i];
-                *v3 = v3[397] ^ dword_55AAA0[v3[1] & 1] ^ ((*v3 ^ (*v3 ^ v3[1]) & 0x7FFFFFFF) >> 1);
-            }
-            while ( i < 623 )
-            {
-                v4 = &this[i++];
-                *v4 = *(v4 - 227) ^ dword_55AAA0[v4[1] & 1] ^ ((*v4 ^ (*v4 ^ v4[1]) & 0x7FFFFFFF) >> 1);
-            }
-            v5 = ((this[623] ^ (*this ^ this[623]) & 0x7FFFFFFFu) >> 1) ^ this[396] ^ dword_55AAA0[*(_BYTE *)this & 1];
-            this[624] = 0;
-            this[623] = v5;
-        }
-        v6 = this[624];
-        v7 = this[v6];
-        this[624] = v6 + 1;
-        v8 = (((((((v7 >> 11) ^ v7) & 0xFF3A58AD) << 7) ^ (v7 >> 11) ^ v7) & 0xFFFFDF8C) << 15) ^ ((((v7 >> 11) ^ v7) & 0xFF3A58AD) << 7) ^ (v7 >> 11) ^ v7;
-        return v8 ^ (v8 >> 18);
-    }
-    private uint sub_49E2A4(int a1, int a2)
-    {
-        _DWORD *v2; // ecx
-        int v3; // esi
-        int result; // eax
-        int v5; // edi
-        int v6; // edi
-        int v7; // [esp+Ch] [ebp-4h]
-
-        sub_49E25E(19650218);
-        v3 = a2;
-        result = 1;
-        v5 = 0;
-        if ( a2 < 624 )
-            v3 = 624;
-        v7 = v3;
-        do
-        {
-            v2[result] = v5 + *(_DWORD *)(a1 + 4 * v5) + (v2[result] ^ (1664525 * (v2[result - 1] ^ (v2[result - 1] >> 30))));
-            ++result;
-            ++v5;
-            if ( result >= 624 )
-            {
-                *v2 = v2[623];
-                result = 1;
-            }
-            if ( v5 >= a2 )
-                v5 = 0;
-            --v7;
-        }
-        while ( v7 );
-        v6 = 623;
-        do
-        {
-            v2[result] = (v2[result] ^ (1566083941 * (v2[result - 1] ^ (v2[result - 1] >> 30)))) - result;
-            if ( ++result >= 624 )
-            {
-                *v2 = v2[623];
-                result = 1;
-            }
-            --v6;
-        }
-        while ( v6 );
-        *v2 = 0x80000000;
-        return result;
-    }
-    private uint sub_49E2A4()
-    {
-        _DWORD *v2; // ecx
-        int v3; // esi
-        int result; // eax
-        int v5; // edi
-        int v6; // edi
-        int v7; // [esp+Ch] [ebp-4h]
-
-        sub_49E25E(19650218);
-        v3 = a2;
-        result = 1;
-        v5 = 0;
-        if ( a2 < 624 )
-            v3 = 624;
-        v7 = v3;
-        do
-        {
-            v2[result] = v5 + *(_DWORD *)(a1 + 4 * v5) + (v2[result] ^ (1664525 * (v2[result - 1] ^ (v2[result - 1] >> 30))));
-            ++result;
-            ++v5;
-            if ( result >= 624 )
-            {
-                *v2 = v2[623];
-                result = 1;
-            }
-            if ( v5 >= a2 )
-                v5 = 0;
-            --v7;
-        }
-        while ( v7 );
-        v6 = 623;
-        do
-        {
-            v2[result] = (v2[result] ^ (1566083941 * (v2[result - 1] ^ (v2[result - 1] >> 30)))) - result;
-            if ( ++result >= 624 )
-            {
-                *v2 = v2[623];
-                result = 1;
-            }
-            --v6;
-        }
-        while ( v6 );
-        *v2 = 0x80000000;
-        return result;
-    }
-    private uint sub_49E25E()
-    {
-        int v2; // edx
-        _DWORD *result; // eax
-
-        *this = a2;
-        this[624] = 1;
-        do
-        {
-            v2 = this[624];
-            result = &this[v2];
-            *result = v2 + 1812433253 * (*(result - 1) ^ (*(result - 1) >> 30));
-            ++this[624];
-        }
-        while ( (int)this[624] < 624 );
-        return result;
-    }
+    //  private uint sub_49F92C()
+    //  {
+    //      sub_49E2A4();
+    //      v6 = sub_49F629();
+    //      return 0;
+    //  }
+    //  private uint sub_49F629()
+    //  {
+    //      char *v1; // esi
+    //      int v2; // edi
+//
+    //      v1 = this + 32;
+    //      v2 = sub_49E34B(this + 32);
+    //      sub_49E34B(v1);
+    //      return v2;
+    //  }
+    //  
+    //  private uint sub_49E34B()
+    //  {
+    //      int v1; // eax
+    //      int i; // esi
+    //      unsigned int *v3; // edx
+    //      unsigned int *v4; // edx
+    //      unsigned int v5; // edx
+    //      int v6; // eax
+    //      unsigned int v7; // edx
+    //      unsigned int v8; // edx
+//
+    //      v1 = this[624];
+    //      if ( v1 >= 624 )
+    //      {
+    //          if ( v1 == 625 )
+    //              sub_49E25E(5489);
+    //          for ( i = 0; i < 227; ++i )
+    //          {
+    //              v3 = &this[i];
+    //              *v3 = v3[397] ^ dword_55AAA0[v3[1] & 1] ^ ((*v3 ^ (*v3 ^ v3[1]) & 0x7FFFFFFF) >> 1);
+    //          }
+    //          while ( i < 623 )
+    //          {
+    //              v4 = &this[i++];
+    //              *v4 = *(v4 - 227) ^ dword_55AAA0[v4[1] & 1] ^ ((*v4 ^ (*v4 ^ v4[1]) & 0x7FFFFFFF) >> 1);
+    //          }
+    //          v5 = ((this[623] ^ (*this ^ this[623]) & 0x7FFFFFFFu) >> 1) ^ this[396] ^ dword_55AAA0[*(_BYTE *)this & 1];
+    //          this[624] = 0;
+    //          this[623] = v5;
+    //      }
+    //      v6 = this[624];
+    //      v7 = this[v6];
+    //      this[624] = v6 + 1;
+    //      v8 = (((((((v7 >> 11) ^ v7) & 0xFF3A58AD) << 7) ^ (v7 >> 11) ^ v7) & 0xFFFFDF8C) << 15) ^ ((((v7 >> 11) ^ v7) & 0xFF3A58AD) << 7) ^ (v7 >> 11) ^ v7;
+    //      return v8 ^ (v8 >> 18);
+    //  }
+    //  private uint sub_49E2A4(int a1, int a2)
+    //  {
+    //      _DWORD *v2; // ecx
+    //      int v3; // esi
+    //      int result; // eax
+    //      int v5; // edi
+    //      int v6; // edi
+    //      int v7; // [esp+Ch] [ebp-4h]
+//
+    //      sub_49E25E(19650218);
+    //      v3 = a2;
+    //      result = 1;
+    //      v5 = 0;
+    //      if ( a2 < 624 )
+    //          v3 = 624;
+    //      v7 = v3;
+    //      do
+    //      {
+    //          v2[result] = v5 + *(_DWORD *)(a1 + 4 * v5) + (v2[result] ^ (1664525 * (v2[result - 1] ^ (v2[result - 1] >> 30))));
+    //          ++result;
+    //          ++v5;
+    //          if ( result >= 624 )
+    //          {
+    //              *v2 = v2[623];
+    //              result = 1;
+    //          }
+    //          if ( v5 >= a2 )
+    //              v5 = 0;
+    //          --v7;
+    //      }
+    //      while ( v7 );
+    //      v6 = 623;
+    //      do
+    //      {
+    //          v2[result] = (v2[result] ^ (1566083941 * (v2[result - 1] ^ (v2[result - 1] >> 30)))) - result;
+    //          if ( ++result >= 624 )
+    //          {
+    //              *v2 = v2[623];
+    //              result = 1;
+    //          }
+    //          --v6;
+    //      }
+    //      while ( v6 );
+    //      *v2 = 0x80000000;
+    //      return result;
+    //  }
+    //  private uint sub_49E2A4()
+    //  {
+    //      _DWORD *v2; // ecx
+    //      int v3; // esi
+    //      int result; // eax
+    //      int v5; // edi
+    //      int v6; // edi
+    //      int v7; // [esp+Ch] [ebp-4h]
+//
+    //      sub_49E25E(19650218);
+    //      v3 = a2;
+    //      result = 1;
+    //      v5 = 0;
+    //      if ( a2 < 624 )
+    //          v3 = 624;
+    //      v7 = v3;
+    //      do
+    //      {
+    //          v2[result] = v5 + *(_DWORD *)(a1 + 4 * v5) + (v2[result] ^ (1664525 * (v2[result - 1] ^ (v2[result - 1] >> 30))));
+    //          ++result;
+    //          ++v5;
+    //          if ( result >= 624 )
+    //          {
+    //              *v2 = v2[623];
+    //              result = 1;
+    //          }
+    //          if ( v5 >= a2 )
+    //              v5 = 0;
+    //          --v7;
+    //      }
+    //      while ( v7 );
+    //      v6 = 623;
+    //      do
+    //      {
+    //          v2[result] = (v2[result] ^ (1566083941 * (v2[result - 1] ^ (v2[result - 1] >> 30)))) - result;
+    //          if ( ++result >= 624 )
+    //          {
+    //              *v2 = v2[623];
+    //              result = 1;
+    //          }
+    //          --v6;
+    //      }
+    //      while ( v6 );
+    //      *v2 = 0x80000000;
+    //      return result;
+    //  }
+    //  private uint sub_49E25E()
+    //  {
+    //      int v2; // edx
+    //      _DWORD *result; // eax
+//
+    //      *this = a2;
+    //      this[624] = 1;
+    //      do
+    //      {
+    //          v2 = this[624];
+    //          result = &this[v2];
+    //          *result = v2 + 1812433253 * (*(result - 1) ^ (*(result - 1) >> 30));
+    //          ++this[624];
+    //      }
+    //      while ( (int)this[624] < 624 );
+    //      return result;
+    //  }
     private void sub_49F563(IBuffer b, uint u1)
     {
         b.Position = 0;
@@ -369,7 +428,7 @@ public class DjMaxCrypto
         b.WriteUInt32(val);
         return val;
     }
-    
+
     public uint sub_49F4A2(IBuffer b)
     {
         uint idx1 = b.GetUInt32(4);
