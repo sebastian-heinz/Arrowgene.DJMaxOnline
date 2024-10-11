@@ -109,7 +109,7 @@ public class DjMaxCrypto
     
         for (int i = 7; i < onXX.Length; i++)
         {
-            if (seedIdx > 8)
+            if (seedIdx > 7)
             {
                 // TODO sub_49F571
             }
