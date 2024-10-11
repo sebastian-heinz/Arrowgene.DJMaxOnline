@@ -1,5 +1,6 @@
 ﻿using Arrowgene.Buffers;
 using Arrowgene.DJMaxOnline;
+using Buffer = System.Buffer;
 
 namespace ConsoleApp1;
 
@@ -67,14 +68,9 @@ public class DjMaxCrypto
 
         sub_49F563(bSnd, u1);
         sub_49F563(bRcv, u1);
-
-        // TODO implement this
-        //sub_49F92C();
-        //sub_49F92C();
-
+        
         MersenneTwister mt = new MersenneTwister(r1);
-        uint uint1 = mt.NextUInt32();
-        uint uint2 = mt.NextUInt32();
+
 
 
         // Missing send encryption
@@ -82,6 +78,7 @@ public class DjMaxCrypto
         // TODO encrypt implementation
 
         // recv XX
+        sub_49F4A2(bRcv);
         sub_49F4A2(bRcv);
         byte[] onXX = new byte[]
         {
@@ -93,10 +90,46 @@ public class DjMaxCrypto
             0x24, 0x94, 0x54, 0xFB, 0x60, 0xDF, 0x75, 0xCE, 0x95, 0xA3, 0xFA, 0x07, 0xAE, 0x64, 0x27, 0x6F,
             0xAA, 0x69, 0xBF, 0x35, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
-        IBuffer onXXB = new StreamBuffer(onXX);
-        //sub_49F884(bRcv, onXXB);
+        
+        
+        uint uint1 =mt.NextUInt32();
+        uint uint2 =mt.NextUInt32();
+        
+        
+        IBuffer seedBuff = new StreamBuffer();
+        seedBuff.WriteUInt32(u1);
+        seedBuff.WriteUInt32(u1);
+        int seedIdx = 0;
+        
+        IBuffer rngBuff = new StreamBuffer();
+        rngBuff.WriteUInt32(uint1);
+        rngBuff.WriteUInt32(uint2);
+        int rngIdx = 0;
 
-        Console.WriteLine(Util.HexDump(bSnd.GetAllBytes()));
+    
+        for (int i = 7; i < onXX.Length; i++)
+        {
+            if (seedIdx > 8)
+            {
+                // TODO sub_49F571
+            }
+            
+            byte x_seed = seedBuff.GetByte(seedIdx);
+            byte x_rng = rngBuff.GetByte(rngIdx);
+            byte x_key = (byte)(x_seed ^ x_rng);
+            byte encrpyted = onXX[i];
+            byte decrypted = (byte)(encrpyted ^ x_key);
+            onXX[i] = decrypted;
+            seedBuff.Position = seedIdx;
+            seedBuff.WriteByte(decrypted);
+            seedIdx++;
+            rngIdx++;
+            
+            int asddf = 1;
+            Console.WriteLine(Util.HexDump(onXX));
+        }
+
+        int asd = 1;
     }
 
     private void sub_49F563(IBuffer b, uint u1)
