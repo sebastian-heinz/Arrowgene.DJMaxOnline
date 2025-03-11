@@ -107,21 +107,20 @@ public class DjMaxCrypto
         rngBuff.WriteUInt32(uint2);
         int rngIdx = 0;
 
+        int onXXoffset = 0;
+
+        uint u2 = 0;
+
     
         for (int i = 7; i < onXX.Length; i++)
         {
             if (seedIdx > 7)
             {
-                uint uint11 =mt.NextUInt32();
-                uint uint22 =mt.NextUInt32();
-                rngBuff.WriteUInt32(uint1);
-                rngBuff.WriteUInt32(uint2);
-                
                 // TODO sub_49F571
                 uint edi = 0;
-                uint eax = u1; //  delta sum
+                uint eax = 0; //  delta sum
                 uint esi = 0;
-                uint edx = 0;
+                uint edx = u2;
                 uint ecx = u1;
                 
                 
@@ -159,20 +158,21 @@ public class DjMaxCrypto
                 }
                 //  ecx  = B0 11 XX XX
                 //  edx  = B0 11 YY YY   XX XX XX XX
-                
-                int isda = 1;
-                uint t1 = 0;
-                uint t2 = t1 >> 5;
-                t1 = t1 + 7; // param?
-                uint t3 = 0;
-                uint t4 = t3 << 4;
-
+                seedBuff = new StreamBuffer();
+                seedBuff.WriteUInt32(ecx);
+                //seedBuff.WriteUInt32(u1);
+                seedBuff.WriteUInt32(edx);
+                seedIdx = 0;
+                uint1 =mt.NextUInt32();
+                uint2 =mt.NextUInt32();
+                rngBuff = new StreamBuffer();
+                rngBuff.WriteUInt32(uint1);
+                rngBuff.WriteUInt32(uint2);
+                u1 = ecx;
+                u2 = edx;
+                rngIdx = 0;
             }
-
-            if (seedIdx == 4)
-            {
-                int isd = 1;
-            }
+            
             byte x_seed = seedBuff.GetByte(seedIdx);
             byte x_rng = rngBuff.GetByte(rngIdx);
             byte x_key = (byte)(x_seed ^ x_rng);
@@ -191,17 +191,17 @@ public class DjMaxCrypto
         int asd = 1;
     }
 
-    private void decipher(uint[] e_block) {
-        int delta_sum = _iterationSpec._deltaSumInitial;
-        int n = _iterationSpec._iterations;
-        while (n-- > 0) {
-            e_block[1] -= ((e_block[0] << 4 ^ e_block[0] >> 5) + e_block[0])
-                          ^ (delta_sum + _key[delta_sum >> 11 & 3]);
-            delta_sum -= DELTA;
-            e_block[0] -= ((e_block[1] << 4 ^ e_block[1] >> 5) + e_block[1])
-                          ^ (delta_sum + _key[delta_sum & 3]);
-        }
-    }
+   //private void decipher(uint[] e_block) {
+   //    int delta_sum = _iterationSpec._deltaSumInitial;
+   //    int n = _iterationSpec._iterations;
+   //    while (n-- > 0) {
+   //        e_block[1] -= ((e_block[0] << 4 ^ e_block[0] >> 5) + e_block[0])
+   //                      ^ (delta_sum + _key[delta_sum >> 11 & 3]);
+   //        delta_sum -= DELTA;
+   //        e_block[0] -= ((e_block[1] << 4 ^ e_block[1] >> 5) + e_block[1])
+   //                      ^ (delta_sum + _key[delta_sum & 3]);
+   //    }
+   //}
     
     
     private void sub_49F563(IBuffer b, uint u1)
