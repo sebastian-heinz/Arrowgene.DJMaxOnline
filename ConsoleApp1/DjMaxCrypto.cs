@@ -98,7 +98,8 @@ public class DjMaxCrypto
         
         IBuffer seedBuff = new StreamBuffer();
         seedBuff.WriteUInt32(u1);
-        seedBuff.WriteUInt32(u1);
+        //seedBuff.WriteUInt32(u1);
+        seedBuff.WriteUInt32(0);
         int seedIdx = 0;
         
         IBuffer rngBuff = new StreamBuffer();
@@ -111,9 +112,67 @@ public class DjMaxCrypto
         {
             if (seedIdx > 7)
             {
+                uint uint11 =mt.NextUInt32();
+                uint uint22 =mt.NextUInt32();
+                rngBuff.WriteUInt32(uint1);
+                rngBuff.WriteUInt32(uint2);
+                
                 // TODO sub_49F571
+                uint edi = 0;
+                uint eax = u1; //  delta sum
+                uint esi = 0;
+                uint edx = 0;
+                uint ecx = u1;
+                
+                
+                IBuffer onXXB = new StreamBuffer(onXX);
+                uint ebp_10 = onXXB.GetUInt32(i - 4);
+                uint ebp_4 = onXXB.GetUInt32(i - 8);
+                uint ebp_8 = onXXB.GetUInt32(i - 4);
+                uint ebp_c = onXXB.GetUInt32(i - 8);
+                
+
+                for (int i1 = 0; i1 < 32; i1++)
+                {
+                    eax = edx;
+                    eax = eax >> 5;
+                    eax = eax + ebp_10; // ebp+10 //07 00 00 00
+                    edi = edx;
+                    edi = edi << 4;
+                    edi = edi + ebp_4; // ebp-4 // AB 64 AB C8
+                    esi = esi - 0x61C88647;
+                    eax = eax ^ edi;
+                    edi = esi + edx;  // [esi + edx]
+                    eax = eax ^ edi;
+                    ecx = ecx + eax;
+                    
+                    eax = ecx;
+                    eax = eax >> 5;
+                    eax = eax + ebp_8; // ebp-8
+                    edi = ecx;
+                    edi = edi << 4;
+                    edi = edi + ebp_c; // ebp-C
+                    eax = eax ^ edi;
+                    edi = esi + ecx; //
+                    eax = eax ^ edi;
+                    edx = edx + eax;
+                }
+                //  ecx  = B0 11 XX XX
+                //  edx  = B0 11 YY YY   XX XX XX XX
+                
+                int isda = 1;
+                uint t1 = 0;
+                uint t2 = t1 >> 5;
+                t1 = t1 + 7; // param?
+                uint t3 = 0;
+                uint t4 = t3 << 4;
+
             }
-            
+
+            if (seedIdx == 4)
+            {
+                int isd = 1;
+            }
             byte x_seed = seedBuff.GetByte(seedIdx);
             byte x_rng = rngBuff.GetByte(rngIdx);
             byte x_key = (byte)(x_seed ^ x_rng);
@@ -132,6 +191,19 @@ public class DjMaxCrypto
         int asd = 1;
     }
 
+    private void decipher(uint[] e_block) {
+        int delta_sum = _iterationSpec._deltaSumInitial;
+        int n = _iterationSpec._iterations;
+        while (n-- > 0) {
+            e_block[1] -= ((e_block[0] << 4 ^ e_block[0] >> 5) + e_block[0])
+                          ^ (delta_sum + _key[delta_sum >> 11 & 3]);
+            delta_sum -= DELTA;
+            e_block[0] -= ((e_block[1] << 4 ^ e_block[1] >> 5) + e_block[1])
+                          ^ (delta_sum + _key[delta_sum & 3]);
+        }
+    }
+    
+    
     private void sub_49F563(IBuffer b, uint u1)
     {
         b.Position = 0;
