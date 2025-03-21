@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Arrowgene.DJMaxOnline;
+namespace Arrowgene.DJMaxOnline.Server;
 
 public class Util
 {

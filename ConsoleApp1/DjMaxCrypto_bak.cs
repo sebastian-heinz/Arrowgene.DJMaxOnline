@@ -1,19 +1,18 @@
 ﻿using Arrowgene.Buffers;
-using Arrowgene.DJMaxOnline;
-using Buffer = System.Buffer;
+using Arrowgene.DJMaxOnline.Server;
 
 namespace ConsoleApp1;
 
-public class DjMaxCrypto
+public class DjMaxCryptoBak
 {
     public static void Main(string[] args)
     {
-        DjMaxCrypto c = new DjMaxCrypto();
+        DjMaxCryptoBak c = new DjMaxCryptoBak();
         c.Decrypt();
     }
 
 
-    public DjMaxCrypto()
+    public DjMaxCryptoBak()
     {
     }
 
@@ -27,6 +26,8 @@ public class DjMaxCrypto
         IBuffer bRcv = new StreamBuffer(seed);
         sub_49F554(bSnd);
         sub_49F554(bRcv);
+
+ 
 
         // recv on connect ack
         byte[] onConAckBuf = new byte[]
@@ -71,7 +72,7 @@ public class DjMaxCrypto
         
         MersenneTwister mt = new MersenneTwister(r1);
 
-
+        encrypt(r1, u1);
 
         // Missing send encryption
         sub_49F4A2(bSnd);
@@ -91,6 +92,7 @@ public class DjMaxCrypto
             0xAA, 0x69, 0xBF, 0x35, 0x24, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
         
+
         
         uint uint1 =mt.NextUInt32();
         uint uint2 =mt.NextUInt32();
@@ -106,6 +108,8 @@ public class DjMaxCrypto
         rngBuff.WriteUInt32(uint1);
         rngBuff.WriteUInt32(uint2);
         int rngIdx = 0;
+
+     
 
         int onXXoffset = 0;
 
@@ -202,6 +206,26 @@ public class DjMaxCrypto
    //                      ^ (delta_sum + _key[delta_sum & 3]);
    //    }
    //}
+
+   private void encrypt(byte[] mt_seed, uint  delta_seed)
+   {
+       DjMaxCrypto crypto = new DjMaxCrypto(mt_seed, delta_seed);
+
+       byte[] data = new byte[]
+       {
+           0xAB, 0x54, 0xAB, 0xC8, 0xC8, 0xC8, 0x0E, 0xA8, 0x38, 0x43, 0xA8, 0x82, 0x82, 0xC8, 0xA8, 0xAB,
+           0xC8, 0x0E, 0xAB, 0x54, 0x43, 0x38, 0x82, 0xA8, 0xC8, 0xA8, 0xC8, 0xAB, 0x65, 0x20, 0x1A, 0x98,
+           0xEE, 0xA8, 0x4D, 0x01, 0xE8, 0x07, 0x06, 0x00, 0x10, 0x00, 0x00, 0x00, 0x25, 0x00, 0x2C, 0x00,
+           0xC0, 0x09, 0x35, 0x38, 0x0B, 0x3E, 0xB4, 0xA2, 0xB0, 0x11, 0x00, 0x00, 0xAB, 0xAB, 0xAB, 0xAB,
+           0xAB, 0xAB, 0xAB, 0xAB, //0xFE, 0xEE, 0xFE, 0xEE, 0xFE, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+          // 0x00, 0xD9, 0x53, 0xF4, 0x61, 0x0C, 0xB1, 0x13, 0x00, 0xE8, 0x03, 0x56, 0x07, 0x88, 0x24, 0x56
+       };
+       Span<byte> t = data;
+       
+       crypto.Encrypt(ref  t);
+
+       int a = 123;
+   }
     
     
     private void sub_49F563(IBuffer b, uint u1)

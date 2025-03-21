@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace ConsoleApp1
+namespace Arrowgene.DJMaxOnline.Server
 {
     public class Crc32 : HashAlgorithm
     {

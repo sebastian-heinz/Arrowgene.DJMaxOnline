@@ -14,4 +14,8 @@
       <PackageReference Include="Arrowgene.Networking" Version="1.0.6" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Arrowgene.DJMaxOnline.Server\Arrowgene.DJMaxOnline.Server.csproj" />
+    </ItemGroup>
+
 </Project>

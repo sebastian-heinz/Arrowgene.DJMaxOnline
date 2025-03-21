@@ -76,7 +76,7 @@
 
 using System;
 
-namespace ConsoleApp1
+namespace Arrowgene.DJMaxOnline.Server
 {
     /// <summary>
     /// Generates pseudo-random numbers using the Mersenne Twister algorithm.
