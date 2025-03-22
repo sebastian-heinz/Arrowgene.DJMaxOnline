@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Arrowgene.Buffers;
+using Arrowgene.DJMaxOnline.Server;
 using Arrowgene.Logging;
 using Arrowgene.Networking.Tcp.Consumer.EventConsumption;
 using Arrowgene.Networking.Tcp.Server.AsyncEvent;
@@ -52,19 +53,23 @@ public class Program
         StreamBuffer b = new StreamBuffer(e.Data);
         b.SetPositionStart();
 
-        uint opCode = b.ReadUInt16();
+        PacketId opCode = (PacketId)b.ReadUInt16();
         Console.WriteLine(opCode);
+        
+        
 
         switch (opCode)
         {
-            case 0x0A:
+            case PacketId.ConnectReq:
             {
+                //OnConnectAck
                 e.Socket.Send(Convert.FromHexString(
                     "0900cc05004d019adfe5671157b2fee80706001000000025002c00c00935380b3eb4a2b0110000cccccccccccccccc"));
                 break;
             }
-            case 0x11:
+            case PacketId.AuthenticateInSndAccReq:
             {
+                //OnAuthenticateInAck
                 e.Socket.Send(Convert.FromHexString(
                     "10001cf9050000e29ff5ee30703c52c29980eb706844fb87577525f107e7c4e3076cc14b1bb8e484d9769cde249cbcc0eed8f0dd4e131b7d34c19e345784c392d8eb03aa05753a249454fb60df75ce95a3fa07ae64276faa69bf3524"));
                 break;
@@ -80,6 +85,6 @@ public class Program
     private void OnClientConnected(object? sender, ConnectedEventArgs e)
     {
         Console.WriteLine($"Client:{e.Socket.Identity} - connected");
-        e.Socket.Send(Convert.FromHexString("0300CC"));
+        e.Socket.Send(Convert.FromHexString("0300CC")); //OnPingTestInf
     }
 }
