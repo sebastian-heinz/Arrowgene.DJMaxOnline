@@ -5,7 +5,7 @@ namespace Arrowgene.DJMaxOnline.Server;
 
 public class Client
 {
-    private static readonly ILogger Logger = LogProvider.Logger(typeof(PacketFactory));
+    private static readonly ServerLogger Logger = LogProvider.Logger<ServerLogger>(typeof(PacketFactory));
 
     public Client(ITcpSocket socket, PacketFactory packetFactory)
     {

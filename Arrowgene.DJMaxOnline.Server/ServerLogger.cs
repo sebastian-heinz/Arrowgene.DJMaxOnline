@@ -65,4 +65,14 @@ public class ServerLogger : Logger
     {
         Write(LogLevel.Debug, $"{client.Identity}{Environment.NewLine}{packet}", packet);
     }
+
+    public void LogUnhandledPacket(Client client, Packet packet)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void LogPacketError(Client client, Packet packet)
+    {
+        throw new NotImplementedException();
+    }
 }
