@@ -1,4 +1,5 @@
 ﻿using Arrowgene.DJMaxOnline.Server;
+using Arrowgene.DJMaxOnline.Server.Handler;
 using Arrowgene.Logging;
 using Arrowgene.Networking.Tcp.Server.AsyncEvent;
 
@@ -20,7 +21,7 @@ public class DjMaxServer
             _setting.ListenIpAddress,
             _setting.ServerPort,
             _consumer,
-            _setting.SocketSettings
+            _setting.AsyncEventSettings
         );
 
         ClientLookup = new ClientLookup();
@@ -47,6 +48,11 @@ public class DjMaxServer
 
     private void ClientConnected(Client client)
     {
+        Packet p = new Packet(PacketId.OnPingTestInf, new byte[]
+        {
+            0xCC
+        }, null, PacketSource.Server);
+        client.Send(p);
     }
 
     private void ClientDisconnected(Client client)
@@ -56,6 +62,7 @@ public class DjMaxServer
 
     private void LoadPacketHandler()
     {
-        _consumer.AddHandler();
+        _consumer.AddHandler(new ConnectReqHandler());
+        _consumer.AddHandler(new OnAuthenticateInAckHandler());
     }
 }

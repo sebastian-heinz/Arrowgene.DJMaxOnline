@@ -16,7 +16,7 @@ public class Consumer : ThreadedBlockingQueueConsumer
     public Action<Client> ClientConnected;
 
     public Consumer(Setting setting)
-        : base(setting.SocketSettings, setting.Name)
+        : base(setting.AsyncEventSettings, setting.Name)
     {
         _setting = setting;
         _lock = new object();

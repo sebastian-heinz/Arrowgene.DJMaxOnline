@@ -25,6 +25,24 @@ public class Program
 
     public void Run(string[] args)
     {
+        Setting setting = new Setting();
+        DjMaxServer server = new DjMaxServer(setting);
+        server.Start();
+        bool isRunning = true;
+        while (isRunning)
+        {
+            ConsoleKeyInfo cki = Console.ReadKey();
+            if (cki.Key == ConsoleKey.Escape)
+            {
+                isRunning = false;
+            }
+        }
+
+        server.Stop();
+    }
+
+    public void RunOld(string[] args)
+    {
         EventConsumer eventConsumer = new EventConsumer();
         eventConsumer.ClientConnected += OnClientConnected;
         eventConsumer.ClientDisconnected += OnClientDisconnected;
@@ -55,8 +73,7 @@ public class Program
 
         PacketId opCode = (PacketId)b.ReadUInt16();
         Console.WriteLine(opCode);
-        
-        
+
 
         switch (opCode)
         {

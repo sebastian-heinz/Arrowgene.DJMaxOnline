@@ -14,23 +14,46 @@ public class PacketFactory
     private int _position;
     private IBuffer _buffer;
 
+
+    private DjMaxCrypto? _crypto;
+    private PacketId _packetId;
+    private byte[] _header;
+
     public PacketFactory()
     {
+        _crypto = null;
         Reset();
+    }
+
+
+    public void InitCrypto(byte[] mtSeed, uint delta)
+    {
+        _crypto = new DjMaxCrypto(mtSeed, delta);
     }
 
     public byte[] Write(Packet packet)
     {
         packet.Source = PacketSource.Server;
-        byte[] data = packet.Data;
-        if (data == null)
+        byte[] packetData = packet.Data;
+        if (packetData == null)
         {
             Logger.Error($"data == null, tried to write invalid data");
             return null;
         }
 
+        if (_crypto != null)
+        {
+            Span<byte> packetDataView = packetData;
+            _crypto.Encrypt(ref packetDataView);
+        }
+
         IBuffer buffer = new StreamBuffer();
         buffer.WriteUInt16((ushort)packet.Id);
+        buffer.WriteBytes(packetData);
+        if (packet.Header != null)
+        {
+            buffer.WriteBytes(packet.Header);
+        }
         return buffer.GetAllBytes();
     }
 
@@ -55,29 +78,26 @@ public class PacketFactory
             read = false;
             if (!_readHeader && _buffer.Size - _buffer.Position >= PacketHeaderSize)
             {
-                byte[] header = _buffer.ReadBytes(PacketHeaderSize);
+                _packetId = (PacketId)_buffer.ReadUInt16();
+                _header = _buffer.ReadBytes(PacketHeaderSize - 2);
                 _readHeader = true;
-                _dataSize = _buffer.Size - _buffer.Position;
+                _dataSize = (ushort)(_buffer.Size - _buffer.Position);
             }
 
             if (_readHeader && _buffer.Size - _buffer.Position >= _dataSize)
             {
-                byte[] encryptedPacketData = _buffer.ReadBytes(_dataSize);
-                byte[] packetData = Decrypt(encryptedPacketData);
+                byte[] packetData = _buffer.ReadBytes(_dataSize);
+                if (_crypto != null)
+                {
+                    Span<byte> packetDataView = packetData;
+                    _crypto.Decrypt(ref packetDataView);
+                }
 
-                byte[] payload;
-                PacketId packetId;
-                uint packetCount;
-
-                Packet packet = new Packet(packetId, payload, packetSource, packetCount);
-
+                Packet packet = new Packet(_packetId, packetData, _header, PacketSource.Client);
                 packets.Add(packet);
 
                 _readHeader = false;
                 read = _buffer.Position != _buffer.Size;
-            }
-            else
-            {
             }
         }
 
