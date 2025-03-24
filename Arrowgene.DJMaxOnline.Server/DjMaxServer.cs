@@ -48,10 +48,7 @@ public class DjMaxServer
 
     private void ClientConnected(Client client)
     {
-        Packet p = new Packet(PacketId.OnPingTestInf, new byte[]
-        {
-            0xCC
-        }, null, PacketSource.Server);
+        Packet p = new Packet(PacketMeta.OnPingTestInf, new byte[] { 0xCC });
         client.Send(p);
     }
 

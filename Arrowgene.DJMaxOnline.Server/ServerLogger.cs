@@ -63,16 +63,28 @@ public class ServerLogger : Logger
 
     public void LogPacket(Client client, Packet packet)
     {
-        Write(LogLevel.Debug, $"{client.Identity}{Environment.NewLine}{packet}", packet);
+        Write(
+            LogLevel.Info,
+            $"{client.Identity}{Environment.NewLine}--- Packet ---{Environment.NewLine}{packet.ToLog()}",
+            packet
+        );
     }
 
     public void LogUnhandledPacket(Client client, Packet packet)
     {
-        throw new NotImplementedException();
+        Write(
+            LogLevel.Error,
+            $"{client.Identity}{Environment.NewLine}--- Unhandled Packet ---{Environment.NewLine}{packet.ToLog()}",
+            packet
+        );
     }
 
     public void LogPacketError(Client client, Packet packet)
     {
-        throw new NotImplementedException();
+        Write(
+            LogLevel.Error,
+            $"{client.Identity}{Environment.NewLine}--- Packet Error ---{Environment.NewLine}{packet.ToLog()}",
+            packet
+        );
     }
 }

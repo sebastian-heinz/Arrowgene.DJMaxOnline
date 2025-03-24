@@ -2,16 +2,14 @@
 
 public enum PacketId : ushort
 {
-    //OnInitialize = 0x00,
+    // OnInitialize = 0x00, - Not a Packet
+    // OnRegister = 0x00, - Not a Packet
+    // Resume = 0x00, - Not a Packet
+    // OnConnect = 0x00, - Not a Packet
+
     InitReq = 0x00,
-
-    //OnRegister = 0x00,
     Suspend = 0x00,
-
-    //Resume = 0x00,
     OnDestroy = 0x00,
-
-    //OnConnect = 0x00,
     OnDisconnect = 0x00,
     ConnectReq = 0x0A,
     OnConnectAck = 0x09,

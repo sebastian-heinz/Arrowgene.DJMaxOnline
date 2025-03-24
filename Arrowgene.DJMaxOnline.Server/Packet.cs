@@ -2,16 +2,20 @@
 
 public class Packet
 {
-    public PacketSource Source { get; set; }
-    public PacketId Id { get; set; }
-    public byte[] Data { get; set; }
-    public byte[]? Header { get; set; }
+    public PacketMeta Meta { get; }
+    public PacketId Id => Meta.Id;
+    public byte[] Data { get; }
 
-    public Packet(PacketId id, byte[] data, byte[] header, PacketSource source)
+    public Packet(PacketMeta meta, byte[] data)
     {
-        Id = id;
-        Source = source;
+        Meta = meta;
         Data = data;
-        Header = header;
+    }
+
+    public string ToLog()
+    {
+        return $"{Meta.ToLog()}" +
+               Environment.NewLine +
+               $"{Util.HexDump(Data)}";
     }
 }

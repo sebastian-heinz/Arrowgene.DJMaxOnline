@@ -7,22 +7,24 @@ public class PacketFactory
 {
     private static readonly ILogger Logger = LogProvider.Logger(typeof(PacketFactory));
 
-    private const int PacketHeaderSize = 7;
+    private const int PacketHeaderSize = 5;
+    private const int PacketIdSize = 2;
 
-    private bool _readHeader;
-    private ushort _dataSize;
+    private bool _readPacketId;
+    private int _dataSize;
     private int _position;
     private IBuffer _buffer;
-
-
     private DjMaxCrypto? _crypto;
-    private PacketId _packetId;
-    private byte[] _header;
+    private PacketMeta _packetMeta;
 
     public PacketFactory()
     {
+        _readPacketId = false;
+        _dataSize = 0;
+        _position = 0;
+        _buffer = new StreamBuffer();
         _crypto = null;
-        Reset();
+        _packetMeta = null;
     }
 
 
@@ -33,13 +35,7 @@ public class PacketFactory
 
     public byte[] Write(Packet packet)
     {
-        packet.Source = PacketSource.Server;
         byte[] packetData = packet.Data;
-        if (packetData == null)
-        {
-            Logger.Error($"data == null, tried to write invalid data");
-            return null;
-        }
 
         if (_crypto != null)
         {
@@ -50,42 +46,52 @@ public class PacketFactory
         IBuffer buffer = new StreamBuffer();
         buffer.WriteUInt16((ushort)packet.Id);
         buffer.WriteBytes(packetData);
-        if (packet.Header != null)
-        {
-            buffer.WriteBytes(packet.Header);
-        }
         return buffer.GetAllBytes();
     }
 
     public List<Packet> Read(byte[] data)
     {
         List<Packet> packets = new List<Packet>();
-        if (_buffer == null)
-        {
-            _buffer = new StreamBuffer(data);
-        }
-        else
-        {
-            _buffer.SetPositionEnd();
-            _buffer.WriteBytes(data);
-        }
-
+        _buffer.SetPositionEnd();
+        _buffer.WriteBytes(data);
         _buffer.Position = _position;
 
         bool read = true;
         while (read)
         {
             read = false;
-            if (!_readHeader && _buffer.Size - _buffer.Position >= PacketHeaderSize)
+            if (!_readPacketId && _buffer.Size - _buffer.Position >= PacketIdSize)
             {
-                _packetId = (PacketId)_buffer.ReadUInt16();
-                _header = _buffer.ReadBytes(PacketHeaderSize - 2);
-                _readHeader = true;
-                _dataSize = (ushort)(_buffer.Size - _buffer.Position);
+                ushort packetIdNum = _buffer.ReadUInt16();
+
+                if (!Enum.IsDefined(typeof(PacketId), packetIdNum))
+                {
+                    // TODO err
+                    Logger.Error($"packetIdNum: {packetIdNum} is not a defined PacketId");
+                }
+
+                PacketId packetId = (PacketId)packetIdNum;
+
+                if (!PacketMeta.TryGet(packetId, out _packetMeta))
+                {
+                    // TODO err
+                    Logger.Error($"PacketMeta not defined for packetId: {packetId}");
+                }
+
+                _dataSize = _packetMeta.Size - PacketIdSize;
+                _readPacketId = true;
             }
 
-            if (_readHeader && _buffer.Size - _buffer.Position >= _dataSize)
+            if (_readPacketId && _buffer.Size - _buffer.Position >= _dataSize)
             {
+                byte[]? header = null;
+                if (_dataSize >= PacketHeaderSize)
+                {
+                    // TODO revise some small packets might not have a header (pingTest)
+                    // however does it impy all other packets have 5 bytes of header?
+                    header = _buffer.ReadBytes(PacketHeaderSize);
+                }
+
                 byte[] packetData = _buffer.ReadBytes(_dataSize);
                 if (_crypto != null)
                 {
@@ -93,17 +99,18 @@ public class PacketFactory
                     _crypto.Decrypt(ref packetDataView);
                 }
 
-                Packet packet = new Packet(_packetId, packetData, _header, PacketSource.Client);
+                Packet packet = new Packet(_packetMeta, packetData);
                 packets.Add(packet);
 
-                _readHeader = false;
+                _readPacketId = false;
                 read = _buffer.Position != _buffer.Size;
             }
         }
 
         if (_buffer.Position == _buffer.Size)
         {
-            Reset();
+            _buffer.SetPositionStart();
+            _buffer.SetSize(0);
         }
         else
         {
@@ -111,14 +118,5 @@ public class PacketFactory
         }
 
         return packets;
-    }
-
-
-    private void Reset()
-    {
-        _readHeader = false;
-        _dataSize = 0;
-        _position = 0;
-        _buffer = null;
     }
 }
