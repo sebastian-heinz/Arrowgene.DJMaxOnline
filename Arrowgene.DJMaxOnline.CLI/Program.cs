@@ -1,9 +1,12 @@
 ﻿using System.Net;
+using System.Text;
 using Arrowgene.Buffers;
 using Arrowgene.DJMaxOnline.Server;
 using Arrowgene.Logging;
 using Arrowgene.Networking.Tcp.Consumer.EventConsumption;
 using Arrowgene.Networking.Tcp.Server.AsyncEvent;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Arrowgene.DJMaxOnline;
 
@@ -14,7 +17,8 @@ public class Program
         LogProvider.OnLogWrite += LogProviderOnOnLogWrite;
         LogProvider.Start();
         Program p = new Program();
-        p.Run(args);
+        p.RunDecrypt();
+        // p.Run(args);
         LogProvider.Stop();
     }
 
@@ -39,6 +43,35 @@ public class Program
         }
 
         server.Stop();
+    }
+
+    public void RunDecrypt()
+    {
+        string yaml =
+            File.ReadAllText("/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/stream_1.yaml");
+        PacketReader r = new PacketReader();
+        List<PacketReader.PcapPacket> packets = r.ReadYamlPcap(yaml);
+
+        PacketFactory server = new PacketFactory();
+        PacketFactory client = new PacketFactory();
+        StringBuilder sb = new StringBuilder();
+
+        foreach (PacketReader.PcapPacket packet in packets)
+        {
+            if (packet.Source == PacketSource.Client)
+            {
+                packet.ResolvedPackets = client.Read(packet.Data);
+            }
+            else if (packet.Source == PacketSource.Server)
+            {
+                packet.ResolvedPackets = server.Read(packet.Data);
+            }
+
+            foreach (Packet p in packet.ResolvedPackets)
+            {
+                sb.AppendLine(p.ToLog());
+            }
+        }
     }
 
     public void RunOld(string[] args)

@@ -3,5 +3,6 @@
 public enum PacketSource
 {
     Server,
-    Client
+    Client,
+    Unknown
 }
