@@ -121,6 +121,7 @@ public class PacketReader
             pcapPacket.Data = Convert.FromBase64String(yamlPacket.data);
             pcapPacket.TimeStamp = ToReadableTimestamp(yamlPacket.timestamp);
             pcapPacket.Packet = yamlPacket.packet;
+            pcapPacket.ResolvedPackets = new List<Packet>();
             pcapPackets.Add(pcapPacket);
         }
 

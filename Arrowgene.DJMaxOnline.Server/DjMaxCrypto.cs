@@ -10,12 +10,18 @@ public class DjMaxCrypto
         private readonly MersenneTwister _mt;
         private readonly byte[] _rngBuffer;
         private readonly byte[] _sumBuffer;
+        private readonly byte[] _clearBuffer;
+
+        public int Idx { get; set; }
 
         public DjMaxCryptoState(byte[] mtSeed, uint sumSeed)
         {
+            Idx = 0;
             _sumBuffer = new byte[8];
             _rngBuffer = new byte[8];
+            _clearBuffer = new byte[8];
             _mt = new MersenneTwister(mtSeed);
+            NextRngBuffer();
             BinaryPrimitives.WriteUInt32LittleEndian(_sumBuffer, sumSeed);
             BinaryPrimitives.WriteUInt32LittleEndian(_sumBuffer[4..], 0);
         }
@@ -31,6 +37,16 @@ public class DjMaxCrypto
         public Span<byte> GetSumBuffer()
         {
             return new Span<byte>(_sumBuffer);
+        }
+
+        public ReadOnlySpan<byte> GetRngBuffer()
+        {
+            return new ReadOnlySpan<byte>(_rngBuffer);
+        }
+
+        public Span<byte> GetClearBuffer()
+        {
+            return new Span<byte>(_clearBuffer);
         }
     }
 
@@ -55,24 +71,34 @@ public class DjMaxCrypto
 
     public void Decrypt(ref Span<byte> data)
     {
-        ReadOnlySpan<byte> rng = _dec.NextRngBuffer();
+        ReadOnlySpan<byte> rng = _dec.GetRngBuffer();
         Span<byte> sum = _dec.GetSumBuffer();
-        int idx = 0;
+        Span<byte> clear = _dec.GetClearBuffer();
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (idx > 7)
+            if (_dec.Idx > 7)
             {
-                uint clearBlock2 = BinaryPrimitives.ReadUInt32LittleEndian(data[(i - 4)..]);
-                uint clearBlock1 = BinaryPrimitives.ReadUInt32LittleEndian(data[(i - 8)..]);
-                Update(ref sum, clearBlock2, clearBlock1);
-                idx = 0;
+                int required = _dec.Idx;
+
+                if (i < required)
+                {
+                    required = i;
+                    int sdas = 1;
+                }
+
+                Span<byte> s = data.Slice(i - required, required);
+                Console.WriteLine(BitConverter.ToString(s.ToArray()).Replace("-", " "));
+                s.CopyTo(clear);
+                Console.WriteLine(BitConverter.ToString(clear.ToArray()).Replace("-", " "));
+                Update(ref sum, ref clear);
+                _dec.Idx = 0;
                 rng = _dec.NextRngBuffer();
             }
 
-            byte key = (byte)(sum[idx] ^ rng[idx]);
+            byte key = (byte)(sum[_dec.Idx] ^ rng[_dec.Idx]);
             data[i] = (byte)(data[i] ^ key);
-            idx++;
+            _dec.Idx++;
         }
     }
 
@@ -89,7 +115,7 @@ public class DjMaxCrypto
         {
             if (idx > 7)
             {
-                Update(ref sum, clearBlock2, clearBlock1);
+                //    Update(ref sum, clearBlock2, clearBlock1);
                 idx = 0;
                 rng = _enc.NextRngBuffer();
                 if (i + 4 + 4 < data.Length)
@@ -105,13 +131,16 @@ public class DjMaxCrypto
         }
     }
 
-    private void Update(ref Span<byte> sum, uint clearBlock2, uint clearBlock1)
+    private void Update(ref Span<byte> sum, ref Span<byte> clear)
     {
         uint edi = 0;
         uint eax = 0;
         uint esi = 0;
         uint edx = BinaryPrimitives.ReadUInt32LittleEndian(sum[4..]);
         uint ecx = BinaryPrimitives.ReadUInt32LittleEndian(sum);
+
+        uint clearBlock2 = BinaryPrimitives.ReadUInt32LittleEndian(clear[4..]);
+        uint clearBlock1 = BinaryPrimitives.ReadUInt32LittleEndian(clear);
 
         // Console.WriteLine($"clearBlock2:{clearBlock2}");
         // Console.WriteLine($"clearBlock1:{clearBlock1}");

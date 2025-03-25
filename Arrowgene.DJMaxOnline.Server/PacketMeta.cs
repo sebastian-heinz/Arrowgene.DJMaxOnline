@@ -78,11 +78,24 @@ public class PacketMeta
         PacketSize.VerifyCodeInf,
         PacketSource.Server
     );
+    public static readonly PacketMeta OnResaleItemAck = new(
+        "OnResaleItemAck",
+        PacketId.OnResaleItemAck,
+        PacketSize.OnResaleItemAck,
+        PacketSource.Server
+    );
 
     public static readonly PacketMeta OnUpdateUserAccountClassInf = new(
         "OnUpdateUserAccountClassInf",
         PacketId.OnUpdateUserAccountClassInf,
         PacketSize.OnUpdateUserAccountClassInf,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta ResaleItemReq = new(
+        "ResaleItemReq",
+        PacketId.ResaleItemReq,
+        PacketSize.ResaleItemReq,
         PacketSource.Server
     );
 
@@ -96,5 +109,7 @@ public class PacketMeta
         { PacketId.OnUpdateUserAccountClassInf, OnUpdateUserAccountClassInf },
         { PacketId.ClearCourseList, ClearCourseList },
         { PacketId.VerifyCodeInf, VerifyCodeInf },
+        { PacketId.OnResaleItemAck, OnResaleItemAck },
+        { PacketId.ResaleItemReq, ResaleItemReq },
     };
 }

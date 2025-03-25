@@ -90,9 +90,11 @@ public class PacketFactory
                     // TODO revise some small packets might not have a header (pingTest)
                     // however does it impy all other packets have 5 bytes of header?
                     header = _buffer.ReadBytes(PacketHeaderSize);
+                    _dataSize -= PacketHeaderSize;
                 }
 
                 byte[] packetData = _buffer.ReadBytes(_dataSize);
+                Console.WriteLine(Util.HexDump(packetData));
                 if (_crypto == null)
                 {
                     if (_packetMeta.Id == PacketId.OnConnectAck)
