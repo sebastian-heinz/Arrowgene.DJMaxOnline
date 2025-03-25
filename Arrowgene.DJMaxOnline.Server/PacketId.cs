@@ -173,7 +173,7 @@ public enum PacketId : ushort
     OnPurchaseItemAck = 0x00,
     ResaleItemReq = 0x00,
     OnResaleItemAck = 0x00,
-    OnUpdateUserAccountClassInf = 0x00,
-    ClearCourseList = 0x00,
-    VerifyCodeInf = 0x00,
+    OnUpdateUserAccountClassInf = 0x2F, // TODO verify
+    ClearCourseList = 0x17, // TODO for testing
+    VerifyCodeInf = 0x16, // TODO for testing
 }

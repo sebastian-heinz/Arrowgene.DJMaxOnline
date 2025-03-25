@@ -28,9 +28,9 @@ public class PacketFactory
     }
 
 
-    public void InitCrypto(byte[] mtSeed, uint delta)
+    public void InitCrypto(DjMaxCrypto crypto)
     {
-        _crypto = new DjMaxCrypto(mtSeed, delta);
+        _crypto = crypto;
     }
 
     public byte[] Write(Packet packet)
@@ -93,13 +93,26 @@ public class PacketFactory
                 }
 
                 byte[] packetData = _buffer.ReadBytes(_dataSize);
-                if (_crypto != null)
+                if (_crypto == null)
                 {
+                    if (_packetMeta.Id == PacketId.OnConnectAck)
+                    {
+                        _crypto = DjMaxCrypto.FromOnConnectAckPacket(new Packet(_packetMeta, packetData));
+                    }
+                }
+                else
+                {
+                    //_crypto.Reset();
                     Span<byte> packetDataView = packetData;
                     _crypto.Decrypt(ref packetDataView);
                 }
 
                 Packet packet = new Packet(_packetMeta, packetData);
+                if (header != null)
+                {
+                    packet.Header = header;
+                }
+
                 packets.Add(packet);
 
                 _readPacketId = false;

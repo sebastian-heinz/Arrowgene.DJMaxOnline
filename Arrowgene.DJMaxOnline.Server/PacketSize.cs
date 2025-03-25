@@ -4,10 +4,12 @@ public static class PacketSize
 {
     public const int OnPingTestInf = 0x03;
     public const int ConnectReq = 0x17;
-    public const int OnConnectAck = 0x35;
+    public const int OnConnectAck = 0x2F;
     public const int AuthenticateInSndAccReq = 0x43;
     public const int OnAuthenticateInAck = 0x5C;
-
+    public const int OnUpdateUserAccountClassInf = 0xEF;
+    public const int ClearCourseList = 0xF;
+    public const int VerifyCodeInf = 0xF;
     private static readonly Dictionary<PacketId, int> Lookup = new Dictionary<PacketId, int>()
     {
         { PacketId.OnPingTestInf, OnPingTestInf },
@@ -15,6 +17,9 @@ public static class PacketSize
         { PacketId.OnConnectAck, OnConnectAck },
         { PacketId.AuthenticateInSndAccReq, AuthenticateInSndAccReq },
         { PacketId.OnAuthenticateInAck, OnAuthenticateInAck },
+        { PacketId.OnUpdateUserAccountClassInf, OnUpdateUserAccountClassInf },
+        { PacketId.ClearCourseList, ClearCourseList },
+        { PacketId.VerifyCodeInf, VerifyCodeInf },
     };
 
     public static int Get(PacketId packetId)

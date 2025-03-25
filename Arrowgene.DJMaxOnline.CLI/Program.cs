@@ -5,8 +5,6 @@ using Arrowgene.DJMaxOnline.Server;
 using Arrowgene.Logging;
 using Arrowgene.Networking.Tcp.Consumer.EventConsumption;
 using Arrowgene.Networking.Tcp.Server.AsyncEvent;
-using System.Text.Json;
-using System.Text.Json.Nodes;
 
 namespace Arrowgene.DJMaxOnline;
 
@@ -47,8 +45,9 @@ public class Program
 
     public void RunDecrypt()
     {
-        string yaml =
-            File.ReadAllText("/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/stream_1.yaml");
+        string yaml = File.ReadAllText(
+            "/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/Files/blade_stream_00.yaml"
+        );
         PacketReader r = new PacketReader();
         List<PacketReader.PcapPacket> packets = r.ReadYamlPcap(yaml);
 
@@ -56,22 +55,45 @@ public class Program
         PacketFactory client = new PacketFactory();
         StringBuilder sb = new StringBuilder();
 
-        foreach (PacketReader.PcapPacket packet in packets)
+        try
         {
-            if (packet.Source == PacketSource.Client)
+            foreach (PacketReader.PcapPacket packet in packets)
             {
-                packet.ResolvedPackets = client.Read(packet.Data);
-            }
-            else if (packet.Source == PacketSource.Server)
-            {
-                packet.ResolvedPackets = server.Read(packet.Data);
-            }
+                if (packet.Source == PacketSource.Client)
+                {
+                    packet.ResolvedPackets = client.Read(packet.Data);
+                }
+                else if (packet.Source == PacketSource.Server)
+                {
+                    if (packet.Data[0] == 0x0A && packet.Data[1] == 0x00)
+                    {
+                        // adjust packet
+                        packet.Data[0] = 0x09;
+                    }
 
-            foreach (Packet p in packet.ResolvedPackets)
-            {
-                sb.AppendLine(p.ToLog());
+                    packet.ResolvedPackets = server.Read(packet.Data);
+
+                    foreach (Packet p in packet.ResolvedPackets)
+                    {
+                        if (p.Id == PacketId.OnConnectAck)
+                        {
+                            client.InitCrypto(DjMaxCrypto.FromOnConnectAckPacket(p));
+                        }
+                    }
+                }
+
+                foreach (Packet p in packet.ResolvedPackets)
+                {
+                    sb.AppendLine(p.ToLog());
+                }
             }
         }
+        catch (Exception ex)
+        {
+        }
+
+        File.WriteAllText("/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/out.txt",
+            sb.ToString());
     }
 
     public void RunOld(string[] args)

@@ -1,4 +1,5 @@
 ﻿using System.Buffers.Binary;
+using Arrowgene.Buffers;
 
 namespace Arrowgene.DJMaxOnline.Server;
 
@@ -6,25 +7,16 @@ public class DjMaxCrypto
 {
     private class DjMaxCryptoState
     {
-        private MersenneTwister _mt;
+        private readonly MersenneTwister _mt;
         private readonly byte[] _rngBuffer;
         private readonly byte[] _sumBuffer;
-        private readonly uint _sumSeed;
-        private readonly byte[] _mtSeed;
 
         public DjMaxCryptoState(byte[] mtSeed, uint sumSeed)
         {
-            _sumSeed = sumSeed;
-            _mtSeed = mtSeed;
             _sumBuffer = new byte[8];
             _rngBuffer = new byte[8];
-            Reset();
-        }
-
-        public void Reset()
-        {
-            _mt = new MersenneTwister(_mtSeed);
-            BinaryPrimitives.WriteUInt32LittleEndian(_sumBuffer, _sumSeed);
+            _mt = new MersenneTwister(mtSeed);
+            BinaryPrimitives.WriteUInt32LittleEndian(_sumBuffer, sumSeed);
             BinaryPrimitives.WriteUInt32LittleEndian(_sumBuffer[4..], 0);
         }
 
@@ -44,11 +36,21 @@ public class DjMaxCrypto
 
     private DjMaxCryptoState _enc;
     private DjMaxCryptoState _dec;
+    private readonly uint _sumSeed;
+    private readonly byte[] _mtSeed;
 
-    public DjMaxCrypto(byte[] mtSeed, uint delta)
+    public DjMaxCrypto(byte[] mtSeed, uint sumSeed)
     {
-        _enc = new DjMaxCryptoState(mtSeed, delta);
-        _dec = new DjMaxCryptoState(mtSeed, delta);
+        _sumSeed = sumSeed;
+        _mtSeed = mtSeed;
+        _enc = new DjMaxCryptoState(_mtSeed, _sumSeed);
+        _dec = new DjMaxCryptoState(_mtSeed, _sumSeed);
+    }
+
+    public void Reset()
+    {
+        _enc = new DjMaxCryptoState(_mtSeed, _sumSeed);
+        _dec = new DjMaxCryptoState(_mtSeed, _sumSeed);
     }
 
     public void Decrypt(ref Span<byte> data)
@@ -63,7 +65,7 @@ public class DjMaxCrypto
             {
                 uint clearBlock2 = BinaryPrimitives.ReadUInt32LittleEndian(data[(i - 4)..]);
                 uint clearBlock1 = BinaryPrimitives.ReadUInt32LittleEndian(data[(i - 8)..]);
-                Crypt(ref sum, clearBlock2, clearBlock1);
+                Update(ref sum, clearBlock2, clearBlock1);
                 idx = 0;
                 rng = _dec.NextRngBuffer();
             }
@@ -87,7 +89,7 @@ public class DjMaxCrypto
         {
             if (idx > 7)
             {
-                Crypt(ref sum, clearBlock2, clearBlock1);
+                Update(ref sum, clearBlock2, clearBlock1);
                 idx = 0;
                 rng = _enc.NextRngBuffer();
                 if (i + 4 + 4 < data.Length)
@@ -103,7 +105,7 @@ public class DjMaxCrypto
         }
     }
 
-    private void Crypt(ref Span<byte> sum, uint clearBlock2, uint clearBlock1)
+    private void Update(ref Span<byte> sum, uint clearBlock2, uint clearBlock1)
     {
         uint edi = 0;
         uint eax = 0;
@@ -145,5 +147,39 @@ public class DjMaxCrypto
 
         BinaryPrimitives.WriteUInt32LittleEndian(sum, ecx);
         BinaryPrimitives.WriteUInt32LittleEndian(sum[4..], edx);
+    }
+
+    public static DjMaxCrypto FromOnConnectAckPacket(Packet packet)
+    {
+        IBuffer buf = packet.GetBuffer();
+        uint a = buf.ReadUInt32();
+        uint b = buf.ReadUInt32();
+        byte[] c = buf.ReadBytes(32 - 4 - 4);
+        a = ~a;
+        b = ~b;
+        IBuffer outBuf = new StreamBuffer();
+        outBuf.WriteUInt32(a);
+        outBuf.WriteUInt32(b);
+        outBuf.WriteBytes(c);
+        byte[] mtSeed = outBuf.GetAllBytes();
+        uint seed = outBuf.GetUInt32(28);
+        return new DjMaxCrypto(mtSeed, seed);
+    }
+
+    public Packet ToOnConnectAckPacket()
+    {
+        IBuffer buf = new StreamBuffer(_mtSeed);
+        uint a = buf.ReadUInt32();
+        uint b = buf.ReadUInt32();
+        byte[] c = buf.ReadBytes(32 - 4 - 4);
+        a = ~a;
+        b = ~b;
+        buf.SetPositionStart();
+        buf.WriteBytes(new byte[] { 0xCC, 0x05, 0x00, 0x4d, 0x01 });
+        buf.WriteUInt32(a);
+        buf.WriteUInt32(b);
+        buf.WriteBytes(c);
+        Packet packet = new Packet(PacketMeta.OnConnectAck, buf.GetAllBytes());
+        return packet;
     }
 }

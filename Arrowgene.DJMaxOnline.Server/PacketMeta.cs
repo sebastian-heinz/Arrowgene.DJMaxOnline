@@ -14,12 +14,12 @@ public class PacketMeta
         Size = size;
         Source = source;
     }
-    
+
     public string ToLog()
     {
-        return $"Id:{Id} Name:{Name} Size:{Size} Source:{Source}";
+        return $"{Name}: [Id:{Id}(0x{(uint)Id:X})] [Size:{Size}] [Source:{Source}]";
     }
-    
+
     public static PacketMeta Get(PacketId packetId)
     {
         return Lookup[packetId];
@@ -29,7 +29,7 @@ public class PacketMeta
     {
         return Lookup.TryGetValue(packetId, out packetMeta);
     }
-    
+
     public static readonly PacketMeta OnPingTestInf = new(
         "OnPingTestInf",
         PacketId.OnPingTestInf,
@@ -58,13 +58,34 @@ public class PacketMeta
         PacketSource.Client
     );
 
+    public static readonly PacketMeta ClearCourseList = new(
+        "ClearCourseList",
+        PacketId.ClearCourseList,
+        PacketSize.ClearCourseList,
+        PacketSource.Client
+    );
+
     public static readonly PacketMeta OnAuthenticateInAck = new(
         "OnAuthenticateInAck",
         PacketId.OnAuthenticateInAck,
         PacketSize.OnAuthenticateInAck,
         PacketSource.Server
     );
-    
+
+    public static readonly PacketMeta VerifyCodeInf = new(
+        "VerifyCodeInf",
+        PacketId.VerifyCodeInf,
+        PacketSize.VerifyCodeInf,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnUpdateUserAccountClassInf = new(
+        "OnUpdateUserAccountClassInf",
+        PacketId.OnUpdateUserAccountClassInf,
+        PacketSize.OnUpdateUserAccountClassInf,
+        PacketSource.Server
+    );
+
     private static readonly Dictionary<PacketId, PacketMeta> Lookup = new Dictionary<PacketId, PacketMeta>()
     {
         { PacketId.OnPingTestInf, OnPingTestInf },
@@ -72,5 +93,8 @@ public class PacketMeta
         { PacketId.OnConnectAck, OnConnectAck },
         { PacketId.AuthenticateInSndAccReq, AuthenticateInSndAccReq },
         { PacketId.OnAuthenticateInAck, OnAuthenticateInAck },
+        { PacketId.OnUpdateUserAccountClassInf, OnUpdateUserAccountClassInf },
+        { PacketId.ClearCourseList, ClearCourseList },
+        { PacketId.VerifyCodeInf, VerifyCodeInf },
     };
 }

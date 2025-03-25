@@ -1,0 +1,62 @@
+peers:
+  - peer: 0
+    host: 192.168.0.223
+    port: 63462
+  - peer: 1
+    host: 101.32.26.152
+    port: 23505
+packets:
+  - packet: 4
+    peer: 1
+    index: 0
+    timestamp: 1718469464.745130000
+    data: !!binary |
+      AwDM
+  - packet: 5
+    peer: 0
+    index: 0
+    timestamp: 1718469464.745561000
+    data: !!binary |
+      CgB3AQIEAAAAAAAAAAAAAP////8OAAA=
+  - packet: 7
+    peer: 1
+    index: 1
+    timestamp: 1718469465.064427000
+    data: !!binary |
+      CgDMBQBNAZrf5WcRV7L+6AcGABAAAAAlACwAwAk1OAs+tKKwEQAAzMzMzMzMzMw=
+  - packet: 9
+    peer: 0
+    index: 1
+    timestamp: 1718469479.262802000
+    data: !!binary |
+      EQAcRauCgkn5yCZUuCr6DyBZMFH11G722bXobqBEuepOqE2XaLC8RlJWUhz05THQIelPT2BzUonV
+      gAbgadMVkMtkXQ==
+  - packet: 10
+    peer: 1
+    index: 2
+    timestamp: 1718469479.601099000
+    data: !!binary |
+      EAAc+QUAAOKf9e4wcDxSwpmA63BoRPuHV3Ul8QfnxOMHbMFLG7jkhNl2nN4knLzA7tjw3U4TG300
+      wZ40V4TDktjrA6oFdToklFT7YN91zpWj+geuZCdvqmm/NSQ=
+  - packet: 11
+    peer: 1
+    index: 3
+    timestamp: 1718469479.609641000
+    data: !!binary |
+      LwBh+QUAANG7kh/KhUzTz864RNMA1wAA6AchfZYUkJuSRTrES0kdk8NqqUMc8o2ppw/zawsASLsA
+      AACAUEc/rsknHgwilAsJoJGATUIZ80h6ehKu/iwWRL+5ET4UTPFpdf0Gj28JlQ5FaPFLtXCng+v8
+      nveADA4a1HtRCvha2lXmwBuHLCbEu3UzVQHsfi54KNXQTefhQ2207KJNXhC0+Ff1VFZ2XVcsNFtZ
+      OQ8tVpyNsB6Sljiof4U6t4jeN/pWoEbCAtAaTIRET7bpdG+w4KHbO+Qr5v1S2VW6HH7+Qw0HF96o
+      dwv+ZlcboaiTmeM=
+  - packet: 13
+    peer: 0
+    index: 2
+    timestamp: 1718469483.227776000
+    data: !!binary |
+      FwBhAFkmQ+cl/h19iM+d
+  - packet: 14
+    peer: 1
+    index: 4
+    timestamp: 1718469483.552289000
+    data: !!binary |
+      FgBxzMzMzASWuhUb4uvR

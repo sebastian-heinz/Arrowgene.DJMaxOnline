@@ -61,8 +61,9 @@ public class DjMaxCryptoBak
         //EE A8 4D 01 -- seed mt
         //E8 07 06 00 10 00 00 00 25 00 2C 00 C0 09 35 38 0B 3E B4 A2 B0 11 00 00
         //07
-
+    
         uint crc32 = Crc32.GetHash(r1);
+        //83ACA9C9
 
         ushort s2 = sOnConAckBuf.GetUInt16(5); // 0x4D 0x01
         uint u1 = bR1.GetUInt32(28); // 0xB0 0x11 0x00 0x00
