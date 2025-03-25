@@ -163,13 +163,17 @@ public class DjMaxCryptoBak
                 uint ebp_8 = onXXB.GetUInt32(i - 4);
                 uint ebp_c = onXXB.GetUInt32(i - 8);
 
+                IBuffer clear = new StreamBuffer();
+                clear.WriteUInt32(ebp_4);
+                clear.WriteUInt32(ebp_10);
+                Console.WriteLine("Clear:" + BitConverter.ToString(clear.GetAllBytes()).Replace("-", " "));
 
-                Console.WriteLine($"BAK. i:{i}");
-                Console.WriteLine($"EBP10:{ebp_10}");
-                Console.WriteLine($"ebp_4:{ebp_4}");
-                Console.WriteLine($"edx:{edx}");
-                Console.WriteLine($"ecx:{ecx}");
-                Console.WriteLine($"---------");
+               // Console.WriteLine($"BAK. i:{i}");
+               // Console.WriteLine($"EBP10:{ebp_10}");
+               // Console.WriteLine($"ebp_4:{ebp_4}");
+               // Console.WriteLine($"edx:{edx}");
+               // Console.WriteLine($"ecx:{ecx}");
+               // Console.WriteLine($"---------");
 
 
                 for (int i1 = 0; i1 < 32; i1++)

@@ -79,18 +79,19 @@ public class DjMaxCrypto
         {
             if (_dec.Idx > 7)
             {
-                int required = _dec.Idx;
-
-                if (i < required)
+                if (i < _dec.Idx)
                 {
-                    required = i;
-                    int sdas = 1;
+                    Console.WriteLine("un");
+                    Span<byte> s = data.Slice(0, i);
+                    s.CopyTo(clear.Slice(8 - i, i));
+                }
+                else
+                {
+                    data.Slice(i - 8, 8).CopyTo(clear);
                 }
 
-                Span<byte> s = data.Slice(i - required, required);
-                Console.WriteLine(BitConverter.ToString(s.ToArray()).Replace("-", " "));
-                s.CopyTo(clear);
-                Console.WriteLine(BitConverter.ToString(clear.ToArray()).Replace("-", " "));
+                Console.WriteLine("Clear:" + BitConverter.ToString(clear.ToArray()).Replace("-", " "));
+
                 Update(ref sum, ref clear);
                 _dec.Idx = 0;
                 rng = _dec.NextRngBuffer();
