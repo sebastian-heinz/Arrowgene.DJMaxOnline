@@ -61,7 +61,7 @@ public class Program
             {
                 if (packet.Source == PacketSource.Client)
                 {
-                   // packet.ResolvedPackets = client.Read(packet.Data);
+                    packet.ResolvedPackets = client.Read(packet.Data);
                 }
                 else if (packet.Source == PacketSource.Server)
                 {

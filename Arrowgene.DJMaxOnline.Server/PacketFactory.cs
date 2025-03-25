@@ -94,7 +94,6 @@ public class PacketFactory
                 }
 
                 byte[] packetData = _buffer.ReadBytes(_dataSize);
-                Console.WriteLine(Util.HexDump(packetData));
                 if (_crypto == null)
                 {
                     if (_packetMeta.Id == PacketId.OnConnectAck)
@@ -104,7 +103,6 @@ public class PacketFactory
                 }
                 else
                 {
-                    //_crypto.Reset();
                     Span<byte> packetDataView = packetData;
                     _crypto.Decrypt(ref packetDataView);
                 }

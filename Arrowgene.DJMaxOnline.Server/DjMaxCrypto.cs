@@ -79,19 +79,6 @@ public class DjMaxCrypto
         {
             if (_dec.Idx > 7)
             {
-                if (i < _dec.Idx)
-                {
-                    Console.WriteLine("un");
-                    Span<byte> s = data.Slice(0, i);
-                    s.CopyTo(clear.Slice(8 - i, i));
-                }
-                else
-                {
-                    data.Slice(i - 8, 8).CopyTo(clear);
-                }
-
-                Console.WriteLine("Clear:" + BitConverter.ToString(clear.ToArray()).Replace("-", " "));
-
                 Update(ref sum, ref clear);
                 _dec.Idx = 0;
                 rng = _dec.NextRngBuffer();
@@ -99,6 +86,7 @@ public class DjMaxCrypto
 
             byte key = (byte)(sum[_dec.Idx] ^ rng[_dec.Idx]);
             data[i] = (byte)(data[i] ^ key);
+            clear[_dec.Idx] = data[i];
             _dec.Idx++;
         }
     }
