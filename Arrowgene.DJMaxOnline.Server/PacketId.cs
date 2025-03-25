@@ -12,6 +12,8 @@ public enum PacketId : ushort
     OnDestroy = 0x00, // sub_4316B0 doesnt seem opcode related
     OnDisconnect = 0x00, // sub_4317E0 doesnt seem opcode related
     ConnectReq = 0x0A, // sub_4318B0
+    OnConnectAck = 0x09,
+    AuthenticateInReq = 0x00,  //   related to AuthenticateInSndAcc 
     AuthenticateInSndAccReq = 0x11,
     AuthenticateInSndeKeyAck = 0x14, // sub_431E30 
     OnAuthenticateInAck = 0x10,
