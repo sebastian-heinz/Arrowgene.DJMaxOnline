@@ -19,11 +19,13 @@ public enum PacketId : ushort
     // EraseJoinerInfo = 0x00,
     // ClearJoinerInfo = 0x00,
     // ClearCourseList = 0x00, // not a packet
+    
     UpdateWaiterInfo = 0x00,
     AuthenticateInReq = 0x00,  //only for korea and japanese client
     UpdateRoomInfo = 0x00, 
     UpdateJoinerInfo = 0x00,
     Report = 0x00, // what is this? sub_438FD0
+    
     ConnectReq = 0x0A, 
     OnConnectAck = 0x09, 
     AuthenticateInSndAccReq = 0x11, 
