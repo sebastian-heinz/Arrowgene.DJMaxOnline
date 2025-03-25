@@ -7,9 +7,9 @@ public class PacketMeta
     public int Size { get; }
     public PacketSource Source { get; }
 
-    public PacketMeta(string name, PacketId id, int size, PacketSource source)
+    public PacketMeta(PacketId id, int size, PacketSource source)
     {
-        Name = name;
+        Name = id.ToString();
         Id = id;
         Size = size;
         Source = source;
@@ -31,71 +31,62 @@ public class PacketMeta
     }
 
     public static readonly PacketMeta OnPingTestInf = new(
-        "OnPingTestInf",
         PacketId.OnPingTestInf,
-        PacketSize.OnPingTestInf,
+        0x03,
         PacketSource.Server
     );
 
     public static readonly PacketMeta ConnectReq = new(
-        "ConnectReq",
         PacketId.ConnectReq,
-        PacketSize.ConnectReq,
+        0x17,
         PacketSource.Client
     );
 
     public static readonly PacketMeta OnConnectAck = new(
-        "OnConnectAck",
         PacketId.OnConnectAck,
-        PacketSize.OnConnectAck,
+        0x2F,
         PacketSource.Server
     );
 
     public static readonly PacketMeta AuthenticateInSndAccReq = new(
-        "AuthenticateInSndAccReq",
         PacketId.AuthenticateInSndAccReq,
-        PacketSize.AuthenticateInSndAccReq,
+        0x43,
         PacketSource.Client
     );
 
     public static readonly PacketMeta ClearCourseList = new(
-        "ClearCourseList",
         PacketId.ClearCourseList,
-        PacketSize.ClearCourseList,
+        0xF,
         PacketSource.Client
     );
 
     public static readonly PacketMeta OnAuthenticateInAck = new(
-        "OnAuthenticateInAck",
         PacketId.OnAuthenticateInAck,
-        PacketSize.OnAuthenticateInAck,
+        0x5C,
         PacketSource.Server
     );
 
     public static readonly PacketMeta VerifyCodeInf = new(
-        "VerifyCodeInf",
         PacketId.VerifyCodeInf,
-        PacketSize.VerifyCodeInf,
+        0xF,
         PacketSource.Server
     );
-    public static readonly PacketMeta OnResaleItemAck = new(
-        "OnResaleItemAck",
-        PacketId.OnResaleItemAck,
-        PacketSize.OnResaleItemAck,
+
+    public static readonly PacketMeta OnGameStartInf = new(
+        PacketId.OnGameStartInf,
+        33,
         PacketSource.Server
     );
 
     public static readonly PacketMeta OnUpdateUserAccountClassInf = new(
-        "OnUpdateUserAccountClassInf",
         PacketId.OnUpdateUserAccountClassInf,
-        PacketSize.OnUpdateUserAccountClassInf,
+        19,
         PacketSource.Server
     );
 
-    public static readonly PacketMeta ResaleItemReq = new(
-        "ResaleItemReq",
-        PacketId.ResaleItemReq,
-        PacketSize.ResaleItemReq,
+    public static readonly PacketMeta OnChannelInfoInf = new(
+        PacketId.OnChannelInfoInf,
+        187,
         PacketSource.Server
     );
 
@@ -109,7 +100,7 @@ public class PacketMeta
         { PacketId.OnUpdateUserAccountClassInf, OnUpdateUserAccountClassInf },
         { PacketId.ClearCourseList, ClearCourseList },
         { PacketId.VerifyCodeInf, VerifyCodeInf },
-        { PacketId.OnResaleItemAck, OnResaleItemAck },
-        { PacketId.ResaleItemReq, ResaleItemReq },
+        { PacketId.OnGameStartInf, OnGameStartInf },
+        { PacketId.OnChannelInfoInf, OnChannelInfoInf },
     };
 }

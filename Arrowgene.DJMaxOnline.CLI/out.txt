@@ -31,12 +31,12 @@ OnUpdateUserAccountClassInf: [Id:OnUpdateUserAccountClassInf(0x2F)] [Size:19] [S
 Header:    61 F9 05 00 00
 00000000   00 00 04 00 CC CC CC CC  CC CC CC CC               ····ÌÌÌÌÌÌÌÌ    
 
-OnResaleItemAck: [Id:OnResaleItemAck(0xD3)] [Size:33] [Source:Server]
+OnGameStartInf: [Id:OnGameStartInf(0xD3)] [Size:33] [Source:Server]
 Header:    D7 00 00 E8 07
 00000000   06 00 10 00 00 00 25 00  3B 00 40 4A BE 2F 00 00   ······%·;·@J¾/··
 00000010   00 00 CC CC CC CC CC CC  CC CC                     ··ÌÌÌÌÌÌÌÌ      
 
-ResaleItemReq: [Id:ResaleItemReq(0xB)] [Size:187] [Source:Server]
+OnChannelInfoInf: [Id:OnChannelInfoInf(0xB)] [Size:187] [Source:Server]
 Header:    48 BB 00 00 00
 00000000   01 00 D1 5B 01 00 01 00  00 00 62 00 4C 49 47 48   ··Ñ[······b·LIGH
 00000010   54 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   T···············
