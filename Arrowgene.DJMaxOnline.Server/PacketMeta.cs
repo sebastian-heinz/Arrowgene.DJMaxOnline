@@ -89,18 +89,62 @@ public class PacketMeta
         187,
         PacketSource.Server
     );
-
+     public static readonly PacketMeta LogInReq = new(
+        PacketId.LogInReq,
+        0x35,
+        PacketSource.Client
+    );
+      public static readonly PacketMeta LogOutReq = new(
+        PacketId.LogOutReq,
+        0xD,
+        PacketSource.Client
+    );
+      public static readonly PacketMeta UserInfoReq = new(
+        PacketId.UserInfoReq,
+        0xF,
+        PacketSource.Client
+    );
+    
+      public static readonly PacketMeta InviteRejectReq = new(
+        PacketId.InviteRejectReq,
+        0xC,
+        PacketSource.Client
+    );
+    
+      public static readonly PacketMeta OnInviteReq = new(
+        PacketId.OnInviteReq,
+        0xB,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta TeamControlReq = new(
+        PacketId.TeamControlReq,
+        0xC,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta ReadyReq = new(
+        PacketId.ReadyReq,
+        0xB,
+        PacketSource.Client
+    );
+    
     private static readonly Dictionary<PacketId, PacketMeta> Lookup = new Dictionary<PacketId, PacketMeta>()
-    {
-        { PacketId.OnPingTestInf, OnPingTestInf },
-        { PacketId.ConnectReq, ConnectReq },
-        { PacketId.OnConnectAck, OnConnectAck },
-        { PacketId.AuthenticateInSndAccReq, AuthenticateInSndAccReq },
-        { PacketId.OnAuthenticateInAck, OnAuthenticateInAck },
-        { PacketId.OnUpdateUserAccountClassInf, OnUpdateUserAccountClassInf },
-        { PacketId.ClearCourseList, ClearCourseList },
-        { PacketId.VerifyCodeInf, VerifyCodeInf },
-        { PacketId.OnGameStartInf, OnGameStartInf },
-        { PacketId.OnChannelInfoInf, OnChannelInfoInf },
-    };
+   {
+    { PacketId.OnPingTestInf, OnPingTestInf },
+    { PacketId.ConnectReq, ConnectReq },
+    { PacketId.OnConnectAck, OnConnectAck },
+    { PacketId.AuthenticateInSndAccReq, AuthenticateInSndAccReq },
+    { PacketId.OnAuthenticateInAck, OnAuthenticateInAck },
+    { PacketId.OnUpdateUserAccountClassInf, OnUpdateUserAccountClassInf },
+    { PacketId.ClearCourseList, ClearCourseList },
+    { PacketId.VerifyCodeInf, VerifyCodeInf },
+    { PacketId.OnGameStartInf, OnGameStartInf },
+    { PacketId.OnChannelInfoInf, OnChannelInfoInf },
+    { PacketId.LogInReq, LogInReq },
+    { PacketId.LogOutReq, LogOutReq },
+    { PacketId.UserInfoReq, UserInfoReq },
+    { PacketId.InviteRejectReq, InviteRejectReq },
+    { PacketId.OnInviteReq, OnInviteReq },
+    { PacketId.TeamControlReq, TeamControlReq },
+    { PacketId.ReadyReq, ReadyReq }
+  };
 }
