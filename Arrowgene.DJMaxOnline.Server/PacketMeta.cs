@@ -125,10 +125,110 @@ public class PacketMeta
         PacketId.ReadyReq,
         0xB,
         PacketSource.Client
+    );    
+        public static readonly PacketMeta StartReq = new(
+        PacketId.StartReq,
+        0xD,
+        PacketSource.Client
     );
-    
+        public static readonly PacketMeta PlayStartReq = new(
+        PacketId.PlayStartReq,
+        0xB,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta PlaySkipReq = new(
+        PacketId.PlaySkipReq,
+        0xB,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta PlayOverReq = new(
+        PacketId.PlayOverReq,
+        0xB,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta PlayStateInf = new(
+        PacketId.PlayStateInf,
+        0x13,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta StageResultInf = new(
+        PacketId.StageResultInf,
+        0x3B,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta LeaveRoomReq = new(
+        PacketId.LeaveRoomReq,
+        0xB,
+        PacketSource.Client
+    );   
+        public static readonly PacketMeta ChangeDiscReq = new(
+        PacketId.ChangeDiscReq,
+        0x11,
+        PacketSource.Client
+    );   
+        public static readonly PacketMeta UpdateUserAccountNickReq = new(
+        PacketId.UpdateUserAccountNickReq,
+        0x1C, 
+        PacketSource.Client
+    );   
+
+        public static readonly PacketMeta UpdateUserProfileReq = new(
+        PacketId.UpdateUserProfileReq,
+        0x12, 
+        PacketSource.Client
+    );   
+        public static readonly PacketMeta GetItemReq = new(
+        PacketId.GetItemReq,
+        0xB,
+        PacketSource.Client
+    ); 
+        public static readonly PacketMeta ItemLevelUpReq = new(
+        PacketId.ItemLevelUpReq,
+        0xB, 
+        PacketSource.Client
+    ); 
+        public static readonly PacketMeta UseItemReq = new(
+        PacketId.UseItemReq,
+        0xC, 
+        PacketSource.Client
+    );
+        public static readonly PacketMeta UseEffectorInf = new(
+        PacketId.UseEffectorInf,
+        0x23,
+        PacketSource.Client
+    );
+        public static readonly PacketMeta MountItemReq = new(
+        PacketId.MountItemReq,
+        0x43, 
+        PacketSource.Client
+    ); 
+        public static readonly PacketMeta GetPresentItemReq = new(
+        PacketId.GetPresentItemReq,
+        0xF, 
+        PacketSource.Client
+    ); 
+           public static readonly PacketMeta DeleteItemReq = new(
+        PacketId.DeleteItemReq,
+        0x13, 
+        PacketSource.Client
+    ); 
+           public static readonly PacketMeta MsgRegisterUserReq = new(
+        PacketId.MsgRegisterUserReq,
+        0x24, 
+        PacketSource.Client
+    ); 
+           public static readonly PacketMeta PurchaseItemReq = new(
+        PacketId.PurchaseItemReq,
+        0x23, 
+        PacketSource.Client
+    ); 
+           public static readonly PacketMeta ResaleItemReq = new(
+        PacketId.ResaleItemReq,
+        0x13, 
+        PacketSource.Client
+    ); 
     private static readonly Dictionary<PacketId, PacketMeta> Lookup = new Dictionary<PacketId, PacketMeta>()
-   {
+  {
     { PacketId.OnPingTestInf, OnPingTestInf },
     { PacketId.ConnectReq, ConnectReq },
     { PacketId.OnConnectAck, OnConnectAck },
@@ -145,6 +245,25 @@ public class PacketMeta
     { PacketId.InviteRejectReq, InviteRejectReq },
     { PacketId.OnInviteReq, OnInviteReq },
     { PacketId.TeamControlReq, TeamControlReq },
-    { PacketId.ReadyReq, ReadyReq }
-  };
-}
+    { PacketId.ReadyReq, ReadyReq },
+    { PacketId.StartReq, StartReq },
+    { PacketId.PlayStartReq, PlayStartReq },
+    { PacketId.PlaySkipReq, PlaySkipReq },
+    { PacketId.PlayOverReq, PlayOverReq },
+    { PacketId.PlayStateInf, PlayStateInf },
+    { PacketId.StageResultInf, StageResultInf },
+    { PacketId.LeaveRoomReq, LeaveRoomReq },
+    { PacketId.ChangeDiscReq, ChangeDiscReq },
+    { PacketId.UpdateUserAccountNickReq, UpdateUserAccountNickReq },
+    { PacketId.UpdateUserProfileReq, UpdateUserProfileReq },
+    { PacketId.GetItemReq, GetItemReq },
+    { PacketId.ItemLevelUpReq, ItemLevelUpReq },
+    { PacketId.UseItemReq, UseItemReq },
+    { PacketId.UseEffectorInf, UseEffectorInf },
+    { PacketId.MountItemReq, MountItemReq },
+    { PacketId.GetPresentItemReq, GetPresentItemReq },
+    { PacketId.DeleteItemReq, DeleteItemReq },
+    { PacketId.MsgRegisterUserReq, MsgRegisterUserReq },
+    { PacketId.PurchaseItemReq, PurchaseItemReq },
+    { PacketId.ResaleItemReq, ResaleItemReq }
+};
