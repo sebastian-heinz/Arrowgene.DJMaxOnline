@@ -190,8 +190,8 @@ public class DjMaxCrypto
         uint a = buf.ReadUInt32();
         uint b = buf.ReadUInt32();
         byte[] c = buf.ReadBytes(32 - 4 - 4);
-        a = ~a;
-        b = ~b;
+       // a = ~a;
+      //  b = ~b;
         IBuffer outBuf = new StreamBuffer();
         outBuf.WriteUInt32(a);
         outBuf.WriteUInt32(b);

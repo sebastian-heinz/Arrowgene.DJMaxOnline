@@ -51,7 +51,8 @@ public class Client
         List<Packet> packets;
         try
         {
-            packets = _packetFactory.Read(data);
+            _packetFactory.FillReadBuffer(data);
+            packets = _packetFactory.ReadPackets();
         }
         catch (Exception ex)
         {

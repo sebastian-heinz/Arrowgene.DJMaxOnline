@@ -61,13 +61,16 @@ public class Program
             {
                 if (packet.Source == PacketSource.Client)
                 {
-                    packet.ResolvedPackets = client.Read(packet.Data);
-                    foreach (Packet p in packet.ResolvedPackets)
+                    client.FillReadBuffer(packet.Data);
+                    while (true)
                     {
-                        if (p.Id == PacketId.AuthenticateInSndAccReq)
+                        Packet? p = client.ReadPacket();
+                        if (p == null)
                         {
-                            client.InitCrypto(DjMaxCrypto.FromAuthenticateInSndAccReq(p));
+                            break;
                         }
+
+                        packet.ResolvedPackets.Add(p);
                     }
                 }
                 else if (packet.Source == PacketSource.Server)
@@ -77,15 +80,22 @@ public class Program
                         // adjust packet
                         packet.Data[0] = 0x09;
                     }
-
-                    packet.ResolvedPackets = server.Read(packet.Data);
-
-                    foreach (Packet p in packet.ResolvedPackets)
+                    server.FillReadBuffer(packet.Data);
+                    while (true)
                     {
-                        if (p.Id == PacketId.OnConnectAck)
+                        Packet? p = server.ReadPacket();
+                        if (p == null)
                         {
+                            break;
+                        }
+
+                        if (p.Meta.Id == PacketId.OnConnectAck)
+                        {
+                            server.InitCrypto(DjMaxCrypto.FromOnConnectAckPacket(p));
                             client.InitCrypto(DjMaxCrypto.FromOnConnectAckPacket(p));
                         }
+
+                        packet.ResolvedPackets.Add(p);
                     }
                 }
 
