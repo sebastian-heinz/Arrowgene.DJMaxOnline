@@ -17,7 +17,9 @@ public enum PacketId : ushort
     // ClearUserIdInfo = 0x00,
     // ClearRoomInfo = 0x00, 
     
-    Test00 = 0x1b, // delte for testing
+   // Test00 = 0x1b, // delte for testing
+    Test01 = 0xF0, // delte for testing
+    Test02 = 0x51, // delte for testing
 
     EraseRoomInfo = 0x00,
     EraseJoinerInfo = 0x00,
@@ -41,7 +43,7 @@ public enum PacketId : ushort
     OnUbsAwardAuthenAck = 0x130, 
     KeepAuthenticateInReq = 0x17, 
     OnKeepAuthenticateInAck = 0x16, 
-    LogInReq = 0x18, 
+    LogInReq = 0x1B, 
     OnUserInfoInf = 0x43,
     OnInventoryInfoInf = 0x44,
     OnMessengerInfoInf = 0x45,
@@ -114,7 +116,7 @@ public enum PacketId : ushort
     OnLoadCompleteInf = 0x7C,
     StageResultInf = 0x49, 
     OnStageResultExInf = 0x70,
-    LeaveRoomReq = 0x4D, 
+    LeaveRoomReq = 0x73, 
     OnLeaveRoomAck = 0x74,
     ChangeDiscReq = 0x76,
     OnChangeDiscInf = 0x77,

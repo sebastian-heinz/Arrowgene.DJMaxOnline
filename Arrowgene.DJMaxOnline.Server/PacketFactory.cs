@@ -72,7 +72,7 @@ public class PacketFactory
             if (!Enum.IsDefined(typeof(PacketId), packetIdNum))
             {
                 // TODO err
-                Logger.Error($"packetIdNum: {packetIdNum} is not a defined PacketId");
+                Logger.Error($"packetIdNum: {packetIdNum}(0x{packetIdNum:X}) is not a defined PacketId");
             }
 
             PacketId packetId = (PacketId)packetIdNum;
@@ -80,7 +80,7 @@ public class PacketFactory
             if (!PacketMeta.TryGet(packetId, out _packetMeta))
             {
                 // TODO err
-                Logger.Error($"PacketMeta not defined for packetId: {packetId}");
+                Logger.Error($"PacketMeta not defined for packetId: {packetId}(0x{packetIdNum:X})");
             }
 
             _dataSize = _packetMeta.Size - PacketIdSize;

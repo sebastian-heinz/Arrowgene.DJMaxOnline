@@ -258,12 +258,6 @@ public class PacketMeta
         PacketSource.Client
     );
 
-    public static readonly PacketMeta Test00 = new(
-        PacketId.Test00,
-        0x35,
-        PacketSource.Client
-    );
-
     public static readonly PacketMeta OnUserIdInfoInf = new(
         PacketId.OnUserIdInfoInf,
         0x8D,
@@ -336,6 +330,134 @@ public class PacketMeta
         PacketSource.Client
     );
 
+    public static readonly PacketMeta Test01 = new(
+        PacketId.Test01,
+        0x90,
+        PacketSource.Client
+    );
+
+    public static readonly PacketMeta OnRoomDescInf = new(
+        PacketId.OnRoomDescInf,
+        0x30,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnCreateRoomAck = new(
+        PacketId.OnCreateRoomAck,
+        0x34,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta Test02 = new(
+        PacketId.Test02,
+        135,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnPostJoinRoomInf = new(
+        PacketId.OnPostJoinRoomInf,
+        0xB,
+        PacketSource.Server
+    );
+
+
+    public static readonly PacketMeta OnGameInfoInf = new(
+        PacketId.OnGameInfoInf,
+        //150,
+        9841,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnJoinEventInf = new(
+        PacketId.OnJoinEventInf,
+        13,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnUseEffectorInf = new(
+        PacketId.OnUseEffectorInf,
+        36,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnUseMountItemInf = new(
+        PacketId.OnUseMountItemInf,
+        70,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnStartParameterInf = new(
+        PacketId.OnStartParameterInf,
+        20,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnStartInf = new(
+        PacketId.OnStartInf,
+        14,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnPlayStartInf = new(
+        PacketId.OnPlayStartInf,
+        11,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnCheckDataReq = new(
+        PacketId.OnCheckDataReq,
+        15,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnUpdateUserInventoryDefaultItemInf = new(
+        PacketId.OnUpdateUserInventoryDefaultItemInf,
+        199,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnUpdateUserPropertyInf = new(
+        PacketId.OnUpdateUserPropertyInf,
+        73,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnStageResultExInf = new(
+        PacketId.OnStageResultExInf,
+        51,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnPlayOverInf = new(
+        PacketId.OnPlayOverInf,
+        12,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnReadyInf = new(
+        PacketId.OnReadyInf,
+        18,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnLeaveRoomAck = new(
+        PacketId.OnLeaveRoomAck,
+        12,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnRoomInfoEraseInf = new(
+        PacketId.OnRoomInfoEraseInf,
+        13,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnLogOutAck = new(
+        PacketId.OnLogOutAck,
+        13,
+        PacketSource.Server
+    );
+
     private static readonly Dictionary<PacketId, PacketMeta> Lookup = new()
     {
         { PacketId.OnPingTestInf, OnPingTestInf },
@@ -348,7 +470,6 @@ public class PacketMeta
         { PacketId.VerifyCodeInf, VerifyCodeInf },
         { PacketId.OnGameStartInf, OnGameStartInf },
         { PacketId.OnChannelInfoInf, OnChannelInfoInf },
-        { PacketId.LogInReq, LogInReq },
         { PacketId.LogOutReq, LogOutReq },
         { PacketId.UserInfoReq, UserInfoReq },
         { PacketId.InviteRejectReq, InviteRejectReq },
@@ -376,7 +497,7 @@ public class PacketMeta
         { PacketId.PurchaseItemReq, PurchaseItemReq },
         { PacketId.ResaleItemReq, ResaleItemReq },
         { PacketId.OnKeepAuthenticateInAck, OnKeepAuthenticateInAck },
-        { PacketId.Test00, Test00 },
+        { PacketId.LogInReq, LogInReq },
         { PacketId.OnUserIdInfoInf, OnUserIdInfoInf },
         { PacketId.OnEnvironmentInf, OnEnvironmentInf },
         { PacketId.OnUserInfoInf, OnUserInfoInf },
@@ -389,5 +510,26 @@ public class PacketMeta
         { PacketId.OnInviteRejectAck, OnInviteRejectAck },
         { PacketId.PingTestInf, PingTestInf },
         { PacketId.CreateRoomReq, CreateRoomReq },
+        { PacketId.Test01, Test01 },
+        { PacketId.OnRoomDescInf, OnRoomDescInf },
+        { PacketId.OnCreateRoomAck, OnCreateRoomAck },
+        { PacketId.Test02, Test02 },
+        { PacketId.OnPostJoinRoomInf, OnPostJoinRoomInf },
+        { PacketId.OnGameInfoInf, OnGameInfoInf },
+        { PacketId.OnJoinEventInf, OnJoinEventInf },
+        { PacketId.OnUseEffectorInf, OnUseEffectorInf },
+        { PacketId.OnUseMountItemInf, OnUseMountItemInf },
+        { PacketId.OnStartParameterInf, OnStartParameterInf },
+        { PacketId.OnStartInf, OnStartInf },
+        { PacketId.OnPlayStartInf, OnPlayStartInf },
+        { PacketId.OnCheckDataReq, OnCheckDataReq },
+        { PacketId.OnUpdateUserInventoryDefaultItemInf, OnUpdateUserInventoryDefaultItemInf },
+        { PacketId.OnUpdateUserPropertyInf, OnUpdateUserPropertyInf },
+        { PacketId.OnStageResultExInf, OnStageResultExInf },
+        { PacketId.OnPlayOverInf, OnPlayOverInf },
+        { PacketId.OnLeaveRoomAck, OnLeaveRoomAck },
+        { PacketId.OnRoomInfoEraseInf, OnRoomInfoEraseInf },
+        { PacketId.OnReadyInf, OnReadyInf },
+        { PacketId.OnLogOutAck, OnLogOutAck },
     };
 }

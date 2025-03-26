@@ -45,6 +45,8 @@ public class Program
 
     public void RunDecrypt()
     {
+        // TODO sort packet output by time once decryption is completed
+        
         string yaml = File.ReadAllText(
             "/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/Files/blade_stream_01.yaml"
         );
@@ -61,7 +63,8 @@ public class Program
             {
                 if (packet.Source == PacketSource.Client)
                 {
-                    client.FillReadBuffer(packet.Data);
+                    // TODO focus on client stream later
+                   // client.FillReadBuffer(packet.Data);
                     while (true)
                     {
                         Packet? p = client.ReadPacket();
@@ -72,6 +75,11 @@ public class Program
 
                         sb.AppendLine(p.ToLog());
                         packet.ResolvedPackets.Add(p);
+
+                        if (p.Meta.Source != PacketSource.Client)
+                        {
+                            Console.WriteLine($"!!!! EXPECTED SERVER PACKET {p.Meta.ToLog()}");
+                        }
                     }
                 }
                 else if (packet.Source == PacketSource.Server)
@@ -99,6 +107,11 @@ public class Program
 
                         sb.AppendLine(p.ToLog());
                         packet.ResolvedPackets.Add(p);
+                        
+                        if (p.Meta.Source != PacketSource.Server)
+                        {
+                            Console.WriteLine($"!!!! EXPECTED CLIENT PACKET {p.Meta.ToLog()}");
+                        }
                     }
                 }
             }
