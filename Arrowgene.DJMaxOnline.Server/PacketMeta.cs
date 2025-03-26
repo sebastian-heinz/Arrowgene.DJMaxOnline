@@ -238,7 +238,7 @@ public class PacketMeta
         PacketId.DeleteItemReq,
         0x13,
         PacketSource.Client
-    );
+    ); 
 
     public static readonly PacketMeta MsgRegisterUserReq = new(
         PacketId.MsgRegisterUserReq,
@@ -348,8 +348,8 @@ public class PacketMeta
         PacketSource.Server
     );
 
-    public static readonly PacketMeta Test02 = new(
-        PacketId.Test02,
+    public static readonly PacketMeta OnUpdateJoinerInfoInf  = new(
+        PacketId.OnUpdateJoinerInfoInf ,
         135,
         PacketSource.Server
     );
@@ -457,7 +457,146 @@ public class PacketMeta
         13,
         PacketSource.Server
     );
+    public static readonly PacketMeta AuthenticateInSndeKeyAck = new(
+        PacketId.AuthenticateInSndeKeyAck,
+        20,
+        PacketSource.Client
+    );
+ 
+    public static readonly PacketMeta OnResaleItemAck = new(
+        PacketId.OnResaleItemAck,
+        249,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnPurchaseItemAck = new(
+        PacketId.OnPurchaseItemAck,
+        253,
+        PacketSource.Server
+    );
+     public static readonly PacketMeta OnMsgGroupInf = new(
+        PacketId.OnMsgGroupInf,
+        233,
+        PacketSource.Server
+    ); 
+    public static readonly PacketMeta OnMsgBlkUserInf = new(
+        PacketId.OnMsgBlkUserInf,
+        243,
+        PacketSource.Server
+    ); 
+    public static readonly PacketMeta OnMsgRegUserInf = new(
+        PacketId.OnMsgRegUserInf,
+        483,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnExpiredShopItemInf = new(
+        PacketId.OnExpiredShopItemInf,
+        640,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnExpiredMountItemInf = new(
+        PacketId.OnExpiredMountItemInf,
+        144,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnDeleteItemAck = new(
+        PacketId.OnDeleteItemAck,
+        245,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnGetPresentItemAck = new(
+        PacketId.OnGetPresentItemAck,
+        365,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnMountItemAck = new(
+        PacketId.OnMountItemAck,
+        64,
+        PacketSource.Server
+    );
 
+    public static readonly PacketMeta UseMountItemInf = new(
+        PacketId.UseMountItemInf,
+        64,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta UseEffectorSetInf = new(
+        PacketId.UseEffectorSetInf,
+        19,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnUpdateUserInventoryPresentItemInf = new(
+        PacketId.OnUpdateUserInventoryPresentItemInf,
+        127,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnUpdateUserInventoryMountItemInf = new(
+        PacketId.OnUpdateUserInventoryMountItemInf,
+        47,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnUpdateUserInventoryShopItemInf = new(
+        PacketId.OnUpdateUserInventoryShopItemInf,
+        247,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta OnUpdateUserInventoryEventItemInf = new(
+        PacketId.OnUpdateUserInventoryEventItemInf,
+        135,
+        PacketSource.Server
+    );
+    public static readonly PacketMeta  OnRoomChangeInfoAck = new(
+        PacketId.OnRoomChangeInfoAck,
+        51,
+        PacketSource.Server
+    );
+      public static readonly PacketMeta  QuickInviteReq = new(
+        PacketId.QuickInviteReq,
+        0xB,
+        PacketSource.Client
+    );
+    
+    public static readonly PacketMeta  RoomChangeInfoReq = new(
+        PacketId.RoomChangeInfoReq,
+        0x32,
+        PacketSource.Client
+    );
+    public static readonly PacketMeta  OnJoinRoomAck = new(
+        PacketId.OnJoinRoomAck,
+        50,
+        PacketSource.Server
+    );    
+    public static readonly PacketMeta  JoinRoomReq = new(
+        PacketId.JoinRoomReq,
+        0x19,
+        PacketSource.Client
+    ); 
+
+    public static readonly PacketMeta  OnUserIdInfoAck = new(
+        PacketId.OnUserIdInfoAck,
+        74,
+        PacketSource.Server
+    );    
+    public static readonly PacketMeta  OnAliveReq = new(
+        PacketId.OnAliveReq,
+        3,
+        PacketSource.Server
+    );      
+    public static readonly PacketMeta  AliveAck = new(
+        PacketId.AliveAck,
+        0x3,
+        PacketSource.Client
+    );
+    public static readonly PacketMeta  OnPeerCountInf = new(
+        PacketId.OnPeerCountInf,
+        17,
+        PacketSource.Server
+    );     
+        public static readonly PacketMeta  OnUbsAwardInfoInf = new(
+        PacketId.OnUbsAwardInfoInf,
+        176,
+        PacketSource.Server
+    );     
+    
     private static readonly Dictionary<PacketId, PacketMeta> Lookup = new()
     {
         { PacketId.OnPingTestInf, OnPingTestInf },
@@ -513,7 +652,7 @@ public class PacketMeta
         { PacketId.Test01, Test01 },
         { PacketId.OnRoomDescInf, OnRoomDescInf },
         { PacketId.OnCreateRoomAck, OnCreateRoomAck },
-        { PacketId.Test02, Test02 },
+        { PacketId.OnUpdateJoinerInfoInf , OnUpdateJoinerInfoInf  },
         { PacketId.OnPostJoinRoomInf, OnPostJoinRoomInf },
         { PacketId.OnGameInfoInf, OnGameInfoInf },
         { PacketId.OnJoinEventInf, OnJoinEventInf },
@@ -531,5 +670,33 @@ public class PacketMeta
         { PacketId.OnRoomInfoEraseInf, OnRoomInfoEraseInf },
         { PacketId.OnReadyInf, OnReadyInf },
         { PacketId.OnLogOutAck, OnLogOutAck },
+        { PacketId.AuthenticateInSndeKeyAck, AuthenticateInSndeKeyAck },
+        { PacketId.OnResaleItemAck, OnResaleItemAck },
+        { PacketId.OnPurchaseItemAck, OnPurchaseItemAck },
+        { PacketId.OnMsgGroupInf, OnMsgGroupInf },
+        { PacketId.OnMsgBlkUserInf, OnMsgBlkUserInf },
+        { PacketId.OnMsgRegUserInf, OnMsgRegUserInf },
+        { PacketId.OnExpiredShopItemInf, OnExpiredShopItemInf },
+        { PacketId.OnExpiredMountItemInf, OnExpiredMountItemInf },
+        { PacketId.OnDeleteItemAck, OnDeleteItemAck },
+        { PacketId.OnGetPresentItemAck, OnGetPresentItemAck },
+        { PacketId.OnMountItemAck, OnMountItemAck },
+        { PacketId.UseMountItemInf, UseMountItemInf },
+        { PacketId.UseEffectorSetInf, UseEffectorSetInf },
+        { PacketId.OnUpdateUserInventoryPresentItemInf, OnUpdateUserInventoryPresentItemInf },
+        { PacketId.OnUpdateUserInventoryMountItemInf, OnUpdateUserInventoryMountItemInf },
+        { PacketId.OnUpdateUserInventoryShopItemInf, OnUpdateUserInventoryShopItemInf },
+        { PacketId.OnUpdateUserInventoryEventItemInf, OnUpdateUserInventoryEventItemInf },
+        { PacketId.OnRoomChangeInfoAck, OnRoomChangeInfoAck },
+        { PacketId.QuickInviteReq, QuickInviteReq },
+        { PacketId.RoomChangeInfoReq, RoomChangeInfoReq },
+        { PacketId.OnJoinRoomAck, OnJoinRoomAck },
+        { PacketId.JoinRoomReq, JoinRoomReq },
+        { PacketId.OnUserIdInfoAck, OnUserIdInfoAck },
+        { PacketId.OnAliveReq, OnAliveReq },
+        { PacketId.AliveAck, AliveAck },
+        { PacketId.OnPeerCountInf, OnPeerCountInf },
+        { PacketId.OnUbsAwardInfoInf, OnUbsAwardInfoInf }
+
     };
 }
