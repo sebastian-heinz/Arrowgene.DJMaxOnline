@@ -16,11 +16,11 @@ public enum PacketId : ushort
     // ClearCourseList = 0x00, // not a packet
     // ClearUserIdInfo = 0x00,
     // ClearRoomInfo = 0x00, 
-    //   EraseRoomInfo = 0x00, maybe not packet?
-    //   EraseJoinerInfo = 0x00, maybe not packet?
-    //   EraseWaiterInfo = 0x00,  maybe not packet?
-    //   UpdateWaiterInfo = 0x00, maybe not packet?
-    //   AuthenticateInReq = 0x00,  //only for korea and japanese client
+    //   EraseRoomInfo = 0x00, 
+    //   EraseJoinerInfo = 0x00, 
+    //   EraseWaiterInfo = 0x00,  
+    //   UpdateWaiterInfo = 0x00, 
+    //    AuthenticateInReq = 0x00,  // maybe only for korea and japanese client?
     //   UpdateRoomInfo = 0x00, // ?? 
     //   UpdateJoinerInfo = 0x00,// ??
     //   Report = 0x00, // what is this? sub_438FD0
