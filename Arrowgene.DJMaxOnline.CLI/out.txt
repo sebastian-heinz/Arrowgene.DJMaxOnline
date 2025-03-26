@@ -51,11 +51,11 @@ Header:    48 BB 00 00 00
 000000A0   00 00 00 00 00 00 00 00  01 00 2C 01 65 20 1A 98   ··········,·e ·
 000000B0   99 5C 00 00                                        \··            
 
-ClearCourseList: [Id:ClearCourseList(0x17)] [Size:15] [Source:Client]
+KeepAuthenticateInReq: [Id:KeepAuthenticateInReq(0x17)] [Size:15] [Source:Client]
 Header:    61 00 59 26 43
-00000000   00 E8 4E 77 00 C0 0B 27                            ·èNw·À·'        
+00000000   56 5F E9 22 BA A8 BC B7                            V_é"º¨¼·        
 
-VerifyCodeInf: [Id:VerifyCodeInf(0x16)] [Size:15] [Source:Server]
+OnKeepAuthenticateInAck: [Id:OnKeepAuthenticateInAck(0x16)] [Size:15] [Source:Server]
 Header:    71 CC CC CC CC
 00000000   CC CC CC CC CC CC CC CC                            ÌÌÌÌÌÌÌÌ        
 

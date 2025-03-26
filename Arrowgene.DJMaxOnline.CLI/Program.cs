@@ -62,6 +62,13 @@ public class Program
                 if (packet.Source == PacketSource.Client)
                 {
                     packet.ResolvedPackets = client.Read(packet.Data);
+                    foreach (Packet p in packet.ResolvedPackets)
+                    {
+                        if (p.Id == PacketId.AuthenticateInSndAccReq)
+                        {
+                            client.InitCrypto(DjMaxCrypto.FromAuthenticateInSndAccReq(p));
+                        }
+                    }
                 }
                 else if (packet.Source == PacketSource.Server)
                 {

@@ -183,6 +183,23 @@ public class DjMaxCrypto
         uint seed = outBuf.GetUInt32(28);
         return new DjMaxCrypto(mtSeed, seed);
     }
+    public static DjMaxCrypto FromAuthenticateInSndAccReq(Packet packet)
+    {
+        IBuffer buf = packet.GetBuffer();
+        buf.Position = 28;
+        uint a = buf.ReadUInt32();
+        uint b = buf.ReadUInt32();
+        byte[] c = buf.ReadBytes(32 - 4 - 4);
+        a = ~a;
+        b = ~b;
+        IBuffer outBuf = new StreamBuffer();
+        outBuf.WriteUInt32(a);
+        outBuf.WriteUInt32(b);
+        outBuf.WriteBytes(c);
+        byte[] mtSeed = outBuf.GetAllBytes();
+        uint seed = outBuf.GetUInt32(28);
+        return new DjMaxCrypto(mtSeed, seed);
+    }
 
     public Packet ToOnConnectAckPacket()
     {
