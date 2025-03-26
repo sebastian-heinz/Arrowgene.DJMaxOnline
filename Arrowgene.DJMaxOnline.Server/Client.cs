@@ -23,6 +23,10 @@ public class Client
 
     public DateTime PingTime { get; set; }
 
+    public void InitCrypto(DjMaxCrypto crypto)
+    {
+        _packetFactory.InitCrypto(crypto);
+    }
 
     public void UpdateIdentity()
     {
