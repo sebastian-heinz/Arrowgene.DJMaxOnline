@@ -46,7 +46,7 @@ public class Program
     public void RunDecrypt()
     {
         string yaml = File.ReadAllText(
-            "/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/Files/blade_stream_00.yaml"
+            "/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/Files/blade_stream_01.yaml"
         );
         PacketReader r = new PacketReader();
         List<PacketReader.PcapPacket> packets = r.ReadYamlPcap(yaml);
@@ -70,6 +70,7 @@ public class Program
                             break;
                         }
 
+                        sb.AppendLine(p.ToLog());
                         packet.ResolvedPackets.Add(p);
                     }
                 }
@@ -80,6 +81,7 @@ public class Program
                         // adjust packet
                         packet.Data[0] = 0x09;
                     }
+
                     server.FillReadBuffer(packet.Data);
                     while (true)
                     {
@@ -95,13 +97,9 @@ public class Program
                             client.InitCrypto(DjMaxCrypto.FromOnConnectAckPacket(p));
                         }
 
+                        sb.AppendLine(p.ToLog());
                         packet.ResolvedPackets.Add(p);
                     }
-                }
-
-                foreach (Packet p in packet.ResolvedPackets)
-                {
-                    sb.AppendLine(p.ToLog());
                 }
             }
         }

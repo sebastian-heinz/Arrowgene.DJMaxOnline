@@ -16,6 +16,8 @@ public enum PacketId : ushort
     // ClearCourseList = 0x00, // not a packet
     // ClearUserIdInfo = 0x00,
     // ClearRoomInfo = 0x00, 
+    
+    Test00 = 0x1b, // delte for testing
 
     EraseRoomInfo = 0x00,
     EraseJoinerInfo = 0x00,

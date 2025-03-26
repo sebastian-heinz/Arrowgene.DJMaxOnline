@@ -258,7 +258,85 @@ public class PacketMeta
         PacketSource.Client
     );
 
-    private static readonly Dictionary<PacketId, PacketMeta> Lookup = new Dictionary<PacketId, PacketMeta>()
+    public static readonly PacketMeta Test00 = new(
+        PacketId.Test00,
+        0x35,
+        PacketSource.Client
+    );
+
+    public static readonly PacketMeta OnUserIdInfoInf = new(
+        PacketId.OnUserIdInfoInf,
+        0x8D,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnEnvironmentInf = new(
+        PacketId.OnEnvironmentInf,
+        0x13F,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnUserInfoInf = new(
+        PacketId.OnUserInfoInf,
+        0x8A,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnInventoryInfoInf = new(
+        PacketId.OnInventoryInfoInf,
+        0x2EF,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnMessengerInfoInf = new(
+        PacketId.OnMessengerInfoInf,
+        0x3B9,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnLogInAck = new(
+        PacketId.OnLogInAck,
+        47,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnChatInf = new(
+        PacketId.OnChatInf,
+        0x35,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnWaiterInfoUpdateInf = new(
+        PacketId.OnWaiterInfoUpdateInf,
+        0x4C,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnRoomInfoUpdateInf = new(
+        PacketId.OnRoomInfoUpdateInf,
+        0x33,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta OnInviteRejectAck = new(
+        PacketId.OnInviteRejectAck,
+        0xC,
+        PacketSource.Server
+    );
+
+    public static readonly PacketMeta PingTestInf = new(
+        PacketId.PingTestInf,
+        0x3,
+        PacketSource.Client
+    );
+
+    public static readonly PacketMeta CreateRoomReq = new(
+        PacketId.CreateRoomReq,
+        0x3B,
+        PacketSource.Client
+    );
+
+    private static readonly Dictionary<PacketId, PacketMeta> Lookup = new()
     {
         { PacketId.OnPingTestInf, OnPingTestInf },
         { PacketId.ConnectReq, ConnectReq },
@@ -297,6 +375,19 @@ public class PacketMeta
         { PacketId.MsgRegisterUserReq, MsgRegisterUserReq },
         { PacketId.PurchaseItemReq, PurchaseItemReq },
         { PacketId.ResaleItemReq, ResaleItemReq },
-        { PacketId.OnKeepAuthenticateInAck, OnKeepAuthenticateInAck }
+        { PacketId.OnKeepAuthenticateInAck, OnKeepAuthenticateInAck },
+        { PacketId.Test00, Test00 },
+        { PacketId.OnUserIdInfoInf, OnUserIdInfoInf },
+        { PacketId.OnEnvironmentInf, OnEnvironmentInf },
+        { PacketId.OnUserInfoInf, OnUserInfoInf },
+        { PacketId.OnInventoryInfoInf, OnInventoryInfoInf },
+        { PacketId.OnMessengerInfoInf, OnMessengerInfoInf },
+        { PacketId.OnLogInAck, OnLogInAck },
+        { PacketId.OnChatInf, OnChatInf },
+        { PacketId.OnWaiterInfoUpdateInf, OnWaiterInfoUpdateInf },
+        { PacketId.OnRoomInfoUpdateInf, OnRoomInfoUpdateInf },
+        { PacketId.OnInviteRejectAck, OnInviteRejectAck },
+        { PacketId.PingTestInf, PingTestInf },
+        { PacketId.CreateRoomReq, CreateRoomReq },
     };
 }
