@@ -666,8 +666,8 @@ public class PacketMeta
         PacketSource.Client
     );
 
-    public static readonly PacketMeta sub_439B30 = new(
-        PacketId.sub_439B30,
+    public static readonly PacketMeta ProbeObfuscated = new(
+        PacketId.ProbeObfuscated,
         0x90,
         PacketSource.Client
     );
@@ -786,7 +786,7 @@ public class PacketMeta
         { PacketId.UserIdInfoReq, UserIdInfoReq },
         { PacketId.OnWaiterInfoEraseInf,OnWaiterInfoEraseInf},
         { PacketId.OnChangeDiscInf, OnChangeDiscInf},
-        { PacketId.sub_439B30, sub_439B30 },
+        { PacketId.ProbeObfuscated, ProbeObfuscated},
         { PacketId.sub_434390, sub_434390 },
         { PacketId.sub_434450, sub_434450 },
         { PacketId.sub_434510, sub_434510 },
