@@ -41,8 +41,23 @@ public class PacketFactory
 
         IBuffer buffer = new StreamBuffer();
         buffer.WriteUInt16((ushort)packet.Id);
+        if (packet.Header != null)
+        {
+            buffer.WriteBytes(packet.Header);
+        }
+
         buffer.WriteBytes(packetData);
-        return buffer.GetAllBytes();
+        byte[] b = buffer.GetAllBytes();
+        if (b.Length != packet.Meta.Size)
+        {
+            Logger.Error(
+                $"Packet Size mismatch. Expected: {packet.Meta.Size}, actual: {b.Length}.{Environment.NewLine}" +
+                $"PacketMeta:{packet.Meta.ToLog()} Raw:{Environment.NewLine}" +
+                Util.HexDump(b)
+            );
+        }
+
+        return b;
     }
 
     public void FillReadBuffer(byte[] data)
@@ -103,6 +118,25 @@ public class PacketFactory
             {
                 Span<byte> packetDataView = packetData;
                 _crypto.Decrypt(ref packetDataView);
+
+                if (_packetMeta.Id == PacketId.AuthenticateInSndAccReq)
+                {
+                    IBuffer b = new StreamBuffer(packetData);
+                    b.SetPositionStart();
+                    byte[] user = b.ReadBytes(21);
+                    byte[] pw = b.ReadBytes(11);
+                    byte[] mtSeed = b.ReadBytes(32);
+                    uint crc32 = Crc32.GetHash(mtSeed);
+                    byte[] crc = BitConverter.GetBytes(crc32);
+                    
+                    for (int i = 0; i < user.Length; i++)
+                    {
+                        user[i] = (byte)(user[i] - crc[i % crc.Length]);
+                        user[i] = (byte)~user[i];
+                    }
+
+                    Console.WriteLine(Util.HexDump(user));
+                }
             }
 
             Packet packet = new Packet(_packetMeta, packetData);
