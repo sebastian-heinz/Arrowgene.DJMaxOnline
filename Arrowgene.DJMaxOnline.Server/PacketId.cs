@@ -25,7 +25,7 @@ public enum PacketId : ushort
     //Report = 0x00, // what is this? sub_438FD0
 
     // Test00 = 0x1b, // delte for testing
-    sub_439B30 = 0xF0, // delte for testing
+    Probe_obfuscated = 0xF0, // delte for testing
     sub_434390 = 0x83, //0xD
     sub_434450 = 0x85, //0xD
     sub_434510 = 0x87, //0xD
