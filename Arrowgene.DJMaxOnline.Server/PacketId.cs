@@ -25,7 +25,19 @@ public enum PacketId : ushort
     //Report = 0x00, // what is this? sub_438FD0
 
     // Test00 = 0x1b, // delte for testing
-    Test01 = 0xF0, // delte for testing
+    ProbeObfuscated = 0xF0, // delte for testing
+    sub_434390 = 0x83, //0xD
+    sub_434450 = 0x85, //0xD
+    sub_434510 = 0x87, //0xD
+    sub_434620 = 0x8A, //0xB
+    sub_434B40 = 0xFD, //0xD
+    sub_435F20 = 0x53, //0xC
+    sub_436120 = 0xA3, //0xB
+    sub_4362D0 = 0x56, //0xC
+    sub_437370 = 0x72, //0x103
+    sub_437900 = 0x23, //0xF
+    sub_432210 = 0x12C, //0xB
+    sub_4323D0 = 0x12F, //0x26
     OnUpdateJoinerInfoInf = 0x51, // name sake for sub_4365B0
     ConnectReq = 0x0A, //0x17
     OnConnectAck = 0x09, //0x2F
@@ -80,7 +92,7 @@ public enum PacketId : ushort
     OnJoinerListEnt = 0x41, //??  
     OnJoinerListEnd = 0x42, //??
     CreateRoomReq = 0x4C, 
-    OnCreateRoomAck = 0x75, 
+    OnCreateRoomAck = 0x4D, 
     JoinRoomReq = 0x46, 
     OnJoinRoomAck = 0x47, 
     OnPostJoinRoomInf = 0x48,
