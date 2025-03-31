@@ -24,8 +24,8 @@ public enum PacketId : ushort
     //UpdateRoomInfo = 0x00, not a packet
     //Report = 0x00, // what is this? sub_438FD0
 
-    // Test00 = 0x1b, // delte for testing
-    ProbeObfuscated = 0xF0, // delte for testing
+    Test00 = 0x6f, // delete for testing
+    ProbeObfuscated = 0xF0, // delete for testing
     sub_434390 = 0x83, //0xD
     sub_434450 = 0x85, //0xD
     sub_434510 = 0x87, //0xD

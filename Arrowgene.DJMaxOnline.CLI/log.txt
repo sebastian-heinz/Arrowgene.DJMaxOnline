@@ -84,3 +84,5 @@ Header:    CC 05 00 4D 01
 2025-03-31 02:20:33 - Error - PacketFactory: PacketMeta not defined for packetId: 8124(0x1FBC)
 2025-03-31 02:22:41 - Error - PacketFactory: packetIdNum: 111(0x6F) is not a defined PacketId
 2025-03-31 02:22:41 - Error - PacketFactory: PacketMeta not defined for packetId: 111(0x6F)
+2025-03-31 02:47:39 - Error - PacketFactory: packetIdNum: 65376(0xFF60) is not a defined PacketId
+2025-03-31 02:47:39 - Error - PacketFactory: PacketMeta not defined for packetId: 65376(0xFF60)

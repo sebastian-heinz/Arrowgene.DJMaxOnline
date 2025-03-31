@@ -1210,3 +1210,121 @@ Header:    23 C5 F0 1D 37
 00000000   9C 35 62 81 56 71 74 BA  92 FE 92 36 A3 08 EA 5C   5bVqtºþ6£·ê\
 00000010   5A 91 CF DF 33 FD 66 79  FE D1 F0 A2               ZÏß3ýfyþÑð¢    
 
+Test00: [Id:Test00(0x6F)] [Size:70] [Source:Client]
+Header:    CA 77 00 00 00
+00000000   07 4F FF 69 53 78 E1 52  E8 A7 6F 71 63 00 C5 D0   ·OÿiSxáRè§oqc·ÅÐ
+00000010   82 A9 E7 C1 E5 B5 0D EE  68 69 78 06 1B E3 6A B4   ©çÁåµ·îhix··ãj´
+00000020   6A 14 6A 10 48 B3 7C 17  84 46 10 1C A5 15 32 45   j·j·H³|·F··¥·2E
+00000030   2D 0F 5C 83 C5 17 A0 0B  CF 79 57 1E 73 46 D6      -·\Å· ·ÏyW·sFÖ 
+
+OnUpdateUserInventoryDefaultItemInf: [Id:OnUpdateUserInventoryDefaultItemInf(0x2A)] [Size:199] [Source:Server]
+Header:    09 F9 05 00 00
+00000000   06 04 04 00 08 04 07 00  07 04 05 00 05 04 02 00   ················
+00000010   20 04 02 00 FF FF FF FF  FF FF FF FF FF FF FF FF    ···ÿÿÿÿÿÿÿÿÿÿÿÿ
+00000020   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+00000030   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+00000040   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+00000050   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+00000060   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+00000070   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+00000080   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+00000090   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+000000A0   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+000000B0   FF FF FF FF FF FF FF FF  FF FF FF FF FF FF FF FF   ÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ
+
+OnUpdateUserPropertyInf: [Id:OnUpdateUserPropertyInf(0x25)] [Size:73] [Source:Server]
+Header:    62 F9 05 00 00
+00000000   66 00 07 00 00 00 54 00  00 00 F1 03 00 00 00 00   f·····T···ñ·····
+00000010   00 00 00 00 00 00 00 00  00 00 2A AE 03 00 00 00   ··········*®····
+00000020   00 00 2B 01 00 00 93 26  00 00 9C 1E 0B 00 00 00   ··+···&·······
+00000030   00 00 0B 00 00 00 D6 0E  0B 00 31 63 03 00 00 00   ······Ö···1c····
+00000040   00 00                                              ··              
+
+OnStageResultExInf: [Id:OnStageResultExInf(0x70)] [Size:51] [Source:Server]
+Header:    A8 00 77 00 00
+00000000   00 01 00 00 18 01 06 00  58 00 07 00 00 00 58 00   ········X·····X·
+00000010   00 00 E7 9E C2 42 00 B6  02 03 00 E8 03 00 00 3F   ··çÂB·¶···è···?
+00000020   D3 B9 42 0B 00 36 00 18  00 00 00 02               Ó¹B··6······    
+
+OnPlayOverInf: [Id:OnPlayOverInf(0x6B)] [Size:12] [Source:Server]
+Header:    87 00 00 00 00
+00000000   00 00 00 00 00                                     ·····           
+
+OnReadyInf: [Id:OnReadyInf(0x5E)] [Size:18] [Source:Server]
+Header:    18 00 66 00 F1
+00000000   03 00 00 CC CC CC CC CC  CC CC CC                  ···ÌÌÌÌÌÌÌÌ     
+
+PingTestInf: [Id:PingTestInf(0x4)] [Size:3] [Source:Client]
+00000000   05                                                 ·               
+
+PingTestInf: [Id:PingTestInf(0x4)] [Size:3] [Source:Client]
+00000000   CF                                                 Ï               
+
+PingTestInf: [Id:PingTestInf(0x4)] [Size:3] [Source:Client]
+00000000   E0                                                 à               
+
+PingTestInf: [Id:PingTestInf(0x4)] [Size:3] [Source:Client]
+00000000   AB                                                 «               
+
+LeaveRoomReq: [Id:LeaveRoomReq(0x73)] [Size:11] [Source:Client]
+Header:    CB 00 3D 02 00
+00000000   D9 4C 52 F7                                        ÙLR÷            
+
+OnLeaveRoomAck: [Id:OnLeaveRoomAck(0x74)] [Size:12] [Source:Server]
+Header:    B9 93 00 00 00
+00000000   00 00 00 00 00                                     ·····           
+
+OnWaiterInfoUpdateInf: [Id:OnWaiterInfoUpdateInf(0x3C)] [Size:76] [Source:Server]
+Header:    00 F9 05 00 00
+00000000   42 45 4C 4C 45 43 4E 00  00 00 00 00 00 00 00 00   BELLECN·········
+00000010   00 00 00 00 00 00 00 00  00 42 45 4C 4C 45 00 00   ·········BELLE··
+00000020   00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   ················
+00000030   00 00 00 25 88 00 00 54  00 00 00 07 00 00 00 00   ···%··T········
+00000040   00 04 00 66 00                                     ···f·           
+
+OnRoomInfoEraseInf: [Id:OnRoomInfoEraseInf(0x3B)] [Size:13] [Source:Server]
+Header:    87 00 00 00 00
+00000000   00 00 00 00 00 00                                  ······          
+
+PingTestInf: [Id:PingTestInf(0x4)] [Size:3] [Source:Client]
+00000000   6B                                                 k               
+
+InviteRejectReq: [Id:InviteRejectReq(0xA6)] [Size:12] [Source:Client]
+Header:    81 00 00 87 BE
+00000000   6E 8D 79 57 F7                                     nyW÷           
+
+OnInviteRejectAck: [Id:OnInviteRejectAck(0xA7)] [Size:12] [Source:Server]
+Header:    EB 00 CC CC CC
+00000000   CC CC CC CC CC                                     ÌÌÌÌÌ           
+
+LogOutReq: [Id:LogOutReq(0x19)] [Size:13] [Source:Client]
+Header:    15 00 00 00 00
+00000000   C3 93 E8 91 03 C7                                  Ãè·Ç          
+
+OnLogOutAck: [Id:OnLogOutAck(0x18)] [Size:13] [Source:Server]
+Header:    A4 36 00 CC CC
+00000000   CC CC CC CC CC CC                                  ÌÌÌÌÌÌ          
+
+OnChannelInfoInf: [Id:OnChannelInfoInf(0xB)] [Size:187] [Source:Server]
+Header:    8B BB 00 00 00
+00000000   01 00 D1 5B 01 00 01 00  00 00 62 00 4C 49 47 48   ··Ñ[······b·LIGH
+00000010   54 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   T···············
+00000020   00 00 00 00 00 00 00 00  00 00 00 00 00 2E 5B 35   ·············.[5
+00000030   4B 45 59 5D 20 43 6C 61  73 73 69 63 00 00 00 00   KEY] Classic····
+00000040   00 00 00 00 00 00 00 00  00 00 00 00 00 00 01 00   ················
+00000050   2C 01 65 20 1A 98 D1 5B  00 00 01 00 99 5C 01 00   ,·e ·Ñ[····\··
+00000060   01 00 00 00 62 00 4D 41  4E 49 41 00 00 00 00 00   ····b·MANIA·····
+00000070   00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00   ················
+00000080   00 00 00 00 00 00 00 2E  5B 37 4B 45 59 5D 20 43   ·······.[7KEY] C
+00000090   6C 61 73 73 69 63 00 00  00 00 00 00 00 00 00 00   lassic··········
+000000A0   00 00 00 00 00 00 00 00  01 00 2C 01 65 20 1A 98   ··········,·e ·
+000000B0   99 5C 00 00                                        \··            
+
+KeepAuthenticateInReq: [Id:KeepAuthenticateInReq(0x17)] [Size:15] [Source:Client]
+Header:    45 00 59 26 43
+00000000   19 98 34 9F 64 73 02 A5                            ·4ds·¥        
+
+OnKeepAuthenticateInAck: [Id:OnKeepAuthenticateInAck(0x16)] [Size:15] [Source:Server]
+Header:    4E CC CC CC CC
+00000000   CC CC CC CC CC CC CC CC                            ÌÌÌÌÌÌÌÌ        
+
