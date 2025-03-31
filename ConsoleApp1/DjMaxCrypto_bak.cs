@@ -10,6 +10,20 @@ public class DjMaxCryptoBak
         DjMaxCryptoBak c = new DjMaxCryptoBak();
         c.Decrypt();
     }
+    
+    public void Shad(byte[] input, uint crc32)
+    {
+        byte[] crc = BitConverter.GetBytes(crc32);
+        for (int i = 0; i < input.Length; i++)
+        {
+            byte dl = input[i];
+            dl = (byte)~dl;
+            dl = (byte)(dl + crc[i % crc.Length]);
+
+            int s = 1;
+        }
+
+    }
 
 
     public DjMaxCryptoBak()
@@ -62,6 +76,7 @@ public class DjMaxCryptoBak
         //07
 
         uint crc32 = Crc32.GetHash(r1);
+        //Shad(,crc32);
         //83ACA9C9
 
         ushort s2 = sOnConAckBuf.GetUInt16(5); // 0x4D 0x01

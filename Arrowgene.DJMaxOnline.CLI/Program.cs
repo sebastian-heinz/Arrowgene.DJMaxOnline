@@ -15,14 +15,20 @@ public class Program
         LogProvider.OnLogWrite += LogProviderOnOnLogWrite;
         LogProvider.Start();
         Program p = new Program();
-        p.RunDecrypt();
-        // p.Run(args);
+        //p.RunDecrypt();
+        p.RunOld(args);
+        //p.Run(args);
         LogProvider.Stop();
     }
+
+    private static string RootPath =
+        "C:\\Users\\nxspirit\\dev\\Arrowgene.DJMaxOnline\\Arrowgene.DJMaxOnline\\Arrowgene.DJMaxOnline.CLI\\";
+
 
     private static void LogProviderOnOnLogWrite(object? sender, LogWriteEventArgs e)
     {
         Console.WriteLine(e.Log);
+        File.AppendAllText(Path.Combine(RootPath, "log.txt"), e.Log + Environment.NewLine);
     }
 
     public void Run(string[] args)
@@ -45,10 +51,7 @@ public class Program
 
     public void RunDecrypt()
     {
-
-        string yaml = File.ReadAllText(
-            "/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/Files/blade_stream_00.yaml"
-        );
+        string yaml = File.ReadAllText(Path.Combine(RootPath, "Files/blade_stream_00.yaml"));
         PacketReader r = new PacketReader();
         List<PacketReader.PcapPacket> packets = r.ReadYamlPcap(yaml);
 
@@ -119,8 +122,7 @@ public class Program
             Console.WriteLine(ex);
         }
 
-        File.WriteAllText("/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/out.txt",
-            sb.ToString());
+        File.WriteAllText(Path.Combine(RootPath, "out.txt"), sb.ToString());
     }
 
     public void RunOld(string[] args)
