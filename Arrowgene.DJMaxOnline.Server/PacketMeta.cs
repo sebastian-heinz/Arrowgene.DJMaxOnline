@@ -357,8 +357,7 @@ public class PacketMeta
 
     public static readonly PacketMeta OnGameInfoInf = new(
         PacketId.OnGameInfoInf,
-        //150,
-        1424, //1412?
+        9841,
         PacketSource.Server
     );
 

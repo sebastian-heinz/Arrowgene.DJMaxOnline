@@ -58,3 +58,29 @@ Header:    CC 05 00 4D 01
 00000010   7E 14 13 91 A1 49 5F 36  EF 69 F6 BF 8B B2 D5 34   ~··¡I_6ïiö¿²Õ4
 00000020   CC CC CC CC CC CC CC CC                            ÌÌÌÌÌÌÌÌ        
 
+2025-03-31 02:01:51 - Error - PacketFactory: packetIdNum: 51211(0xC80B) is not a defined PacketId
+2025-03-31 02:01:51 - Error - PacketFactory: PacketMeta not defined for packetId: 51211(0xC80B)
+2025-03-31 02:04:58 - Error - PacketFactory: packetIdNum: 26329(0x66D9) is not a defined PacketId
+2025-03-31 02:04:58 - Error - PacketFactory: PacketMeta not defined for packetId: 26329(0x66D9)
+2025-03-31 02:07:46 - Error - PacketFactory: packetIdNum: 20494(0x500E) is not a defined PacketId
+2025-03-31 02:07:46 - Error - PacketFactory: PacketMeta not defined for packetId: 20494(0x500E)
+2025-03-31 02:09:06 - Error - PacketFactory: packetIdNum: 23153(0x5A71) is not a defined PacketId
+2025-03-31 02:09:06 - Error - PacketFactory: PacketMeta not defined for packetId: 23153(0x5A71)
+2025-03-31 02:09:15 - Error - PacketFactory: packetIdNum: 38541(0x968D) is not a defined PacketId
+2025-03-31 02:09:15 - Error - PacketFactory: PacketMeta not defined for packetId: 38541(0x968D)
+2025-03-31 02:10:28 - Error - PacketFactory: packetIdNum: 13589(0x3515) is not a defined PacketId
+2025-03-31 02:10:28 - Error - PacketFactory: PacketMeta not defined for packetId: 13589(0x3515)
+2025-03-31 02:10:49 - Error - PacketFactory: packetIdNum: 20494(0x500E) is not a defined PacketId
+2025-03-31 02:10:49 - Error - PacketFactory: PacketMeta not defined for packetId: 20494(0x500E)
+2025-03-31 02:13:53 - Error - PacketFactory: packetIdNum: 51211(0xC80B) is not a defined PacketId
+2025-03-31 02:13:53 - Error - PacketFactory: PacketMeta not defined for packetId: 51211(0xC80B)
+2025-03-31 02:14:14 - Error - PacketFactory: packetIdNum: 20757(0x5115) is not a defined PacketId
+2025-03-31 02:14:14 - Error - PacketFactory: PacketMeta not defined for packetId: 20757(0x5115)
+2025-03-31 02:15:09 - Error - PacketFactory: packetIdNum: 26329(0x66D9) is not a defined PacketId
+2025-03-31 02:15:09 - Error - PacketFactory: PacketMeta not defined for packetId: 26329(0x66D9)
+2025-03-31 02:16:30 - Error - PacketFactory: packetIdNum: 111(0x6F) is not a defined PacketId
+2025-03-31 02:16:30 - Error - PacketFactory: PacketMeta not defined for packetId: 111(0x6F)
+2025-03-31 02:20:33 - Error - PacketFactory: packetIdNum: 8124(0x1FBC) is not a defined PacketId
+2025-03-31 02:20:33 - Error - PacketFactory: PacketMeta not defined for packetId: 8124(0x1FBC)
+2025-03-31 02:22:41 - Error - PacketFactory: packetIdNum: 111(0x6F) is not a defined PacketId
+2025-03-31 02:22:41 - Error - PacketFactory: PacketMeta not defined for packetId: 111(0x6F)
