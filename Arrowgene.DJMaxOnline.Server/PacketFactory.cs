@@ -28,6 +28,68 @@ public class PacketFactory
     {
         _crypto = crypto;
     }
+    
+    public static byte[] WritePacket(Packet packet, DjMaxCrypto? crypto = null)
+    {
+        byte[] packetData = packet.Data;
+
+        if (crypto != null)
+        {
+            Span<byte> packetDataView = packetData;
+            crypto.Encrypt(ref packetDataView);
+        }
+
+        IBuffer buffer = new StreamBuffer();
+        buffer.WriteUInt16((ushort)packet.Id);
+        if (packet.Header != null)
+        {
+            buffer.WriteBytes(packet.Header);
+        }
+
+        buffer.WriteBytes(packetData);
+        byte[] b = buffer.GetAllBytes();
+        if (b.Length != packet.Meta.Size)
+        {
+            Logger.Error(
+                $"Packet Size mismatch. Expected: {packet.Meta.Size}, actual: {b.Length}.{Environment.NewLine}" +
+                $"PacketMeta:{packet.Meta.ToLog()} Raw:{Environment.NewLine}" +
+                Util.HexDump(b)
+            );
+        }
+
+        return b;
+    }
+
+    public static byte[] WritePacketOrg(Packet packet, DjMaxCrypto? crypto = null)
+    {
+        byte[] packetData = packet.Org;
+
+        if (crypto != null)
+        {
+            Span<byte> packetDataView = packetData;
+            crypto.Encrypt(ref packetDataView);
+        }
+
+        IBuffer buffer = new StreamBuffer();
+        buffer.WriteUInt16((ushort)packet.Id);
+        if (packet.Header != null)
+        {
+            buffer.WriteBytes(packet.Header);
+        }
+
+        buffer.WriteBytes(packetData);
+        byte[] b = buffer.GetAllBytes();
+        if (b.Length != packet.Meta.Size)
+        {
+            Logger.Error(
+                $"Packet Size mismatch. Expected: {packet.Meta.Size}, actual: {b.Length}.{Environment.NewLine}" +
+                $"PacketMeta:{packet.Meta.ToLog()} Raw:{Environment.NewLine}" +
+                Util.HexDump(b)
+            );
+        }
+
+        return b;
+    }
 
     public byte[] Write(Packet packet)
     {
@@ -114,6 +176,8 @@ public class PacketFactory
             }
 
             byte[] packetData = _buffer.ReadBytes(_dataSize);
+            byte[] org = new byte[packetData.Length];
+            packetData.CopyTo(org, 0);
             if (_crypto != null)
             {
                 Span<byte> packetDataView = packetData;
@@ -144,6 +208,7 @@ public class PacketFactory
             {
                 packet.Header = header;
             }
+            packet.Org = org;
 
             _readPacketId = false;
             return packet;

@@ -7,6 +7,7 @@ public class Packet
     public PacketMeta Meta { get; }
     public PacketId Id => Meta.Id;
     public byte[] Data { get; }
+    public byte[]? Org { get; set; }
     public byte[]? Header { get; set; }
 
     private IBuffer? _buffer;
