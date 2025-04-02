@@ -15,15 +15,19 @@ public class Program
         LogProvider.OnLogWrite += LogProviderOnOnLogWrite;
         LogProvider.Start();
         Program p = new Program();
-        //p.RunDecrypt();
-        p.RunOld(args);
+        p.RunDecrypt();
+        //p.RunOld(args);
         //p.Run(args);
         LogProvider.Stop();
     }
     private static readonly ILogger Logger = LogProvider.Logger(typeof(Program));
 
+    // TODO make this resolve dynamic and copy ./Files to output/build dir
+    // private static string RootPath =
+    //     "C:\\Users\\nxspirit\\dev\\Arrowgene.DJMaxOnline\\Arrowgene.DJMaxOnline\\Arrowgene.DJMaxOnline.CLI\\";
     private static string RootPath =
-        "C:\\Users\\nxspirit\\dev\\Arrowgene.DJMaxOnline\\Arrowgene.DJMaxOnline\\Arrowgene.DJMaxOnline.CLI\\";
+        "/Users/shiba/dev/Arrowgene.DJMaxOnline/Arrowgene.DJMaxOnline.CLI/";
+
 
 
     private static void LogProviderOnOnLogWrite(object? sender, LogWriteEventArgs e)
@@ -52,7 +56,7 @@ public class Program
 
     public void RunDecrypt()
     {
-        string yaml = File.ReadAllText(Path.Combine(RootPath, "Files/blade_stream_00.yaml"));
+        string yaml = File.ReadAllText(Path.Combine(RootPath, "Files/blade_stream_01.yaml"));
         PacketReader r = new PacketReader();
         List<PacketReader.PcapPacket> packets = r.ReadYamlPcap(yaml);
 

@@ -193,13 +193,14 @@ public class PacketFactory
                     uint crc32 = Crc32.GetHash(mtSeed);
                     byte[] crc = BitConverter.GetBytes(crc32);
                     
+                    // TODO test recovery of User / Password
                     for (int i = 0; i < user.Length; i++)
                     {
                         user[i] = (byte)(user[i] - crc[i % crc.Length]);
                         user[i] = (byte)~user[i];
                     }
 
-                    Console.WriteLine(Util.HexDump(user));
+                    // Console.WriteLine(Util.HexDump(user));
                 }
             }
 
