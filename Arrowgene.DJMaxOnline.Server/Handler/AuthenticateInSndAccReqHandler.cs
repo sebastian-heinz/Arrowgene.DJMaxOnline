@@ -2,7 +2,7 @@ using Arrowgene.Buffers;
 
 namespace Arrowgene.DJMaxOnline.Server.Handler;
 
-public class OnAuthenticateInAckHandler : IPacketHandler
+public class AuthenticateInSndAccReqHandler : IPacketHandler
 {
     public void Handle(Client client, Packet packet)
     {
@@ -27,8 +27,9 @@ public class OnAuthenticateInAckHandler : IPacketHandler
 
         Packet rsp = new Packet(PacketMeta.OnAuthenticateInAck, buf.GetAllBytes());
         rsp.Header = new byte[] { 0x1C, 0xF9, 0x05, 0x00, 0x00 };
-        client.Send(rsp);
+        client.Send(rsp);  //10
 
+        // 0b
         Packet rsp1 = new Packet(PacketMeta.OnChannelInfoInf,
             new byte[]
             {
@@ -47,7 +48,17 @@ public class OnAuthenticateInAckHandler : IPacketHandler
         );
         rsp1.Header = new byte[] { 0x48, 0xBB, 0x00, 0x00, 0x00, };
         client.Send(rsp1);
+        
+        
+        //2f
+        Packet rsp2 = new Packet(PacketMeta.OnUpdateUserAccountClassInf,
+            new byte[] { 0x00, 0x00, 0x04, 0x00, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCC }
+
+        );
+        rsp2.Header = new byte[] {  0x61, 0xF9, 0x05, 0x00, 0x00,  };
+        client.Send(rsp2);
+        
     }
 
-    public PacketId Id => PacketId.OnAuthenticateInAck;
+    public PacketId Id => PacketId.AuthenticateInSndAccReq;
 }

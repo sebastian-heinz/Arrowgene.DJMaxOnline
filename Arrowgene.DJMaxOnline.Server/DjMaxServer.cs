@@ -60,6 +60,6 @@ public class DjMaxServer
     private void LoadPacketHandler()
     {
         _consumer.AddHandler(new ConnectReqHandler());
-        _consumer.AddHandler(new OnAuthenticateInAckHandler());
+        _consumer.AddHandler(new AuthenticateInSndAccReqHandler());
     }
 }

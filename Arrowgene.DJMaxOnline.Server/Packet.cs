@@ -7,8 +7,9 @@ public class Packet
     public PacketMeta Meta { get; }
     public PacketId Id => Meta.Id;
     public byte[] Data { get; }
-    public byte[]? Org { get; set; }
     public byte[]? Header { get; set; }
+    
+    public byte[]? Encrypted { get; set; }
 
     private IBuffer? _buffer;
 
@@ -37,4 +38,12 @@ public class Packet
         _buffer.SetPositionStart();
         return _buffer;
     }
+
+    public byte[] GetDataCopy()
+    {
+        byte[] dataCopy = new byte[Data.Length];
+        Array.Copy(Data, dataCopy, dataCopy.Length);
+        return dataCopy;
+    }
+    
 }

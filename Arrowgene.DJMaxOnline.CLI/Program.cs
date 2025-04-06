@@ -1,10 +1,6 @@
-﻿using System.Net;
-using System.Text;
-using Arrowgene.Buffers;
+﻿using System.Text;
 using Arrowgene.DJMaxOnline.Server;
 using Arrowgene.Logging;
-using Arrowgene.Networking.Tcp.Consumer.EventConsumption;
-using Arrowgene.Networking.Tcp.Server.AsyncEvent;
 
 namespace Arrowgene.DJMaxOnline;
 
@@ -15,8 +11,7 @@ public class Program
         LogProvider.OnLogWrite += LogProviderOnOnLogWrite;
         LogProvider.Start();
         Program p = new Program();
-        //p.RunDecrypt();
-        //p.RunOld(args);
+        // p.RunDecrypt();
         p.Run(args);
         LogProvider.Stop();
     }
@@ -56,7 +51,7 @@ public class Program
 
     public void RunDecrypt()
     {
-        string yaml = File.ReadAllText(Path.Combine(RootPath, "Files/blade_stream_01.yaml"));
+        string yaml = File.ReadAllText(Path.Combine(RootPath, "Files/blade_stream_00.yaml"));
         PacketReader r = new PacketReader();
         List<PacketReader.PcapPacket> packets = r.ReadYamlPcap(yaml);
 
@@ -80,9 +75,9 @@ public class Program
                         }
 
                         sb.AppendLine(
-                            $"enc = new byte[] {{ 0x{BitConverter.ToString(PacketFactory.WritePacketOrg(p)).Replace("-", ", 0x")} }}");
+                            $"enc = new byte[] {{ 0x{BitConverter.ToString(p.Encrypted).Replace("-", ", 0x")} }}");
                         sb.AppendLine(
-                            $"dec = new byte[] {{ 0x{BitConverter.ToString(PacketFactory.WritePacket(p)).Replace("-", ", 0x")} }}");
+                            $"dec = new byte[] {{ 0x{BitConverter.ToString(p.Data).Replace("-", ", 0x")} }}");
                         sb.AppendLine(p.ToLog());
                         packet.ResolvedPackets.Add(p);
 
@@ -116,9 +111,9 @@ public class Program
                         }
 
                         sb.AppendLine(
-                            $"enc = new byte[] {{ 0x{BitConverter.ToString(PacketFactory.WritePacketOrg(p)).Replace("-", ", 0x")} }}");
+                            $"enc = new byte[] {{ 0x{BitConverter.ToString(p.Encrypted).Replace("-", ", 0x")} }}");
                         sb.AppendLine(
-                            $"dec = new byte[] {{ 0x{BitConverter.ToString(PacketFactory.WritePacket(p)).Replace("-", ", 0x")} }}");
+                            $"dec = new byte[] {{ 0x{BitConverter.ToString(p.Data).Replace("-", ", 0x")} }}");
                         sb.AppendLine(p.ToLog());
                         packet.ResolvedPackets.Add(p);
 
