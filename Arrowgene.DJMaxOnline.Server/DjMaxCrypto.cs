@@ -102,23 +102,23 @@ public class DjMaxCrypto
 
     public void Encrypt(ref Span<byte> data)
     {
-        ReadOnlySpan<byte> rng = _enc.NextRngBuffer();
+        ReadOnlySpan<byte> rng = _enc.GetRngBuffer();
         Span<byte> sum = _enc.GetSumBuffer();
-        Span<byte> clear = _dec.GetClearBuffer();
+        Span<byte> clear = _enc.GetClearBuffer();
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (_dec.Idx > 7)
+            if (_enc.Idx > 7)
             {
                 Update(ref sum, ref clear);
-                _dec.Idx = 0;
+                _enc.Idx = 0;
                 rng = _enc.NextRngBuffer();
             }
 
-            clear[_dec.Idx] = data[i];
-            byte key = (byte)(sum[_dec.Idx] ^ rng[_dec.Idx]);
+            clear[_enc.Idx] = data[i];
+            byte key = (byte)(sum[_enc.Idx] ^ rng[_enc.Idx]);
             data[i] = (byte)(data[i] ^ key);
-            _dec.Idx++;
+            _enc.Idx++;
         }
     }
 

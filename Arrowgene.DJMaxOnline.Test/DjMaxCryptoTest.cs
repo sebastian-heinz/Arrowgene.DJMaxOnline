@@ -15,11 +15,11 @@ public class DjMaxCryptoTest
         Span<byte> test2 = Encoding.UTF8.GetBytes("With a 2nd part");
 
         crypto.Encrypt(ref test);
-        crypto.Encrypt(ref test2);
         crypto.Decrypt(ref test);
+        crypto.Encrypt(ref test2);
         crypto.Decrypt(ref test2);
-
-        Assert.AreEqual("This is a test", Encoding.UTF8.GetString(test));
-        Assert.AreEqual("With a 2nd part", Encoding.UTF8.GetString(test));
+        
+        Assert.That(Encoding.UTF8.GetString(test), Is.EqualTo("This is a test"));
+        Assert.That(Encoding.UTF8.GetString(test2), Is.EqualTo("With a 2nd part"));
     }
 }
