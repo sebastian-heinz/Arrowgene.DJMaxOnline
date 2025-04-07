@@ -63,6 +63,15 @@ public class DjMaxCrypto
         _dec = new DjMaxCryptoState(_mtSeed, _sumSeed);
     }
 
+    public static DjMaxCrypto Init()
+    {
+        byte[] mtSeed = new byte[32];
+        Random.Shared.NextBytes(mtSeed);
+        IBuffer buf = new StreamBuffer(mtSeed);
+        uint sumSeed = buf.GetUInt32(28);
+        return new DjMaxCrypto(mtSeed, sumSeed);
+    }
+
     public void Reset()
     {
         _enc = new DjMaxCryptoState(_mtSeed, _sumSeed);
@@ -95,28 +104,21 @@ public class DjMaxCrypto
     {
         ReadOnlySpan<byte> rng = _enc.NextRngBuffer();
         Span<byte> sum = _enc.GetSumBuffer();
-        int idx = 0;
-
-        uint clearBlock2 = BinaryPrimitives.ReadUInt32LittleEndian(data[4..]);
-        uint clearBlock1 = BinaryPrimitives.ReadUInt32LittleEndian(data);
+        Span<byte> clear = _dec.GetClearBuffer();
 
         for (int i = 0; i < data.Length; i++)
         {
-            if (idx > 7)
+            if (_dec.Idx > 7)
             {
-                //    Update(ref sum, clearBlock2, clearBlock1);
-                idx = 0;
+                Update(ref sum, ref clear);
+                _dec.Idx = 0;
                 rng = _enc.NextRngBuffer();
-                if (i + 4 + 4 < data.Length)
-                {
-                    clearBlock2 = BinaryPrimitives.ReadUInt32LittleEndian(data[(i + 4)..]);
-                    clearBlock1 = BinaryPrimitives.ReadUInt32LittleEndian(data[i..]);
-                }
             }
 
-            byte key = (byte)(sum[idx] ^ rng[idx]);
+            clear[_dec.Idx] = data[i];
+            byte key = (byte)(sum[_dec.Idx] ^ rng[_dec.Idx]);
             data[i] = (byte)(data[i] ^ key);
-            idx++;
+            _dec.Idx++;
         }
     }
 
@@ -183,6 +185,7 @@ public class DjMaxCrypto
         uint seed = outBuf.GetUInt32(28);
         return new DjMaxCrypto(mtSeed, seed);
     }
+
     public static DjMaxCrypto FromAuthenticateInSndAccReq(Packet packet)
     {
         IBuffer buf = packet.GetBuffer();
@@ -190,8 +193,8 @@ public class DjMaxCrypto
         uint a = buf.ReadUInt32();
         uint b = buf.ReadUInt32();
         byte[] c = buf.ReadBytes(32 - 4 - 4);
-       // a = ~a;
-      //  b = ~b;
+        // a = ~a;
+        //  b = ~b;
         IBuffer outBuf = new StreamBuffer();
         outBuf.WriteUInt32(a);
         outBuf.WriteUInt32(b);

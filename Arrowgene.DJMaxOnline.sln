@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrowgene.DJMaxOnline.Server", "Arrowgene.DJMaxOnline.Server\Arrowgene.DJMaxOnline.Server.csproj", "{3C3ADA43-CE74-46F6-9F1E-BA271393F165}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arrowgene.DJMaxOnline.Test", "Arrowgene.DJMaxOnline.Test\Arrowgene.DJMaxOnline.Test.csproj", "{DEFCE49F-6B6A-462D-8B88-1A3F69F51AC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{3C3ADA43-CE74-46F6-9F1E-BA271393F165}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C3ADA43-CE74-46F6-9F1E-BA271393F165}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C3ADA43-CE74-46F6-9F1E-BA271393F165}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEFCE49F-6B6A-462D-8B88-1A3F69F51AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFCE49F-6B6A-462D-8B88-1A3F69F51AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFCE49F-6B6A-462D-8B88-1A3F69F51AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEFCE49F-6B6A-462D-8B88-1A3F69F51AC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
